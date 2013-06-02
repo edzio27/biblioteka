@@ -61,7 +61,10 @@
 #pragma mark tableView datasource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    for (NSString *key in self.libraryDictionary) {
+    NSArray *arrayKeys = [self.libraryDictionary keysSortedByValueUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+    for (NSString *key in arrayKeys) {
         [self.tagArray addObject:key];
         [self.titleArray addObject:[self.libraryDictionary objectForKey:key]];
     }
