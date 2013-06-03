@@ -66,7 +66,10 @@
 		DB35C1C21755D32100F66EA1 /* TMMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1BF1755D32100F66EA1 /* TMMemoryCache.m */; };
 		DB35C1C71756AE6B00F66EA1 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1C51756AE6B00F66EA1 /* SearchViewController.m */; };
 		DB35C1C81756AE6B00F66EA1 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB35C1C61756AE6B00F66EA1 /* SearchViewController.xib */; };
-		DB9F52F5175D12FE00FC323E /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52F4175D12FE00FC323E /* Position.m */; };
+		DB9F52F8175D23B700FC323E /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52F7175D23B700FC323E /* Position.m */; };
+		DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52FA175D244100FC323E /* PositionResultViewController.m */; };
+		DB9F52FD175D244100FC323E /* PositionResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB9F52FB175D244100FC323E /* PositionResultViewController.xib */; };
+		DB9F5300175D30E300FC323E /* PositionDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52FF175D30E300FC323E /* PositionDetail.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,8 +165,13 @@
 		DB35C1C41756AE6B00F66EA1 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		DB35C1C51756AE6B00F66EA1 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		DB35C1C61756AE6B00F66EA1 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
-		DB9F52F3175D12FE00FC323E /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
-		DB9F52F4175D12FE00FC323E /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
+		DB9F52F6175D23B700FC323E /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
+		DB9F52F7175D23B700FC323E /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
+		DB9F52F9175D244100FC323E /* PositionResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionResultViewController.h; sourceTree = "<group>"; };
+		DB9F52FA175D244100FC323E /* PositionResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionResultViewController.m; sourceTree = "<group>"; };
+		DB9F52FB175D244100FC323E /* PositionResultViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PositionResultViewController.xib; sourceTree = "<group>"; };
+		DB9F52FE175D30E300FC323E /* PositionDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionDetail.h; sourceTree = "<group>"; };
+		DB9F52FF175D30E300FC323E /* PositionDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionDetail.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,9 +297,11 @@
 				DB0259111753F260006F604E /* Shop.m */,
 				DB19B99417593FB500801744 /* Product.h */,
 				DB19B99517593FB500801744 /* Product.m */,
+				DB9F52F6175D23B700FC323E /* Position.h */,
+				DB9F52F7175D23B700FC323E /* Position.m */,
 				DB0259011753E901006F604E /* CoreDataModel.xcdatamodeld */,
-				DB9F52F3175D12FE00FC323E /* Position.h */,
-				DB9F52F4175D12FE00FC323E /* Position.m */,
+				DB9F52FE175D30E300FC323E /* PositionDetail.h */,
+				DB9F52FF175D30E300FC323E /* PositionDetail.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -344,6 +354,9 @@
 				DB19B9AB175CFEF800801744 /* ResultSearchViewController.h */,
 				DB19B9AC175CFEF800801744 /* ResultSearchViewController.m */,
 				DB19B9AD175CFEF800801744 /* ResultSearchViewController.xib */,
+				DB9F52F9175D244100FC323E /* PositionResultViewController.h */,
+				DB9F52FA175D244100FC323E /* PositionResultViewController.m */,
+				DB9F52FB175D244100FC323E /* PositionResultViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -492,6 +505,7 @@
 				DB19B9901759349600801744 /* logo@2x.png in Resources */,
 				DB19B9AA175BEEB400801744 /* LibrariesViewController.xib in Resources */,
 				DB19B9AF175CFEF800801744 /* ResultSearchViewController.xib in Resources */,
+				DB9F52FD175D244100FC323E /* PositionResultViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,7 +547,9 @@
 				DB19B9A3175BDB1900801744 /* HTMLParser.m in Sources */,
 				DB19B9A9175BEEB400801744 /* LibrariesViewController.m in Sources */,
 				DB19B9AE175CFEF800801744 /* ResultSearchViewController.m in Sources */,
-				DB9F52F5175D12FE00FC323E /* Position.m in Sources */,
+				DB9F52F8175D23B700FC323E /* Position.m in Sources */,
+				DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */,
+				DB9F5300175D30E300FC323E /* PositionDetail.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

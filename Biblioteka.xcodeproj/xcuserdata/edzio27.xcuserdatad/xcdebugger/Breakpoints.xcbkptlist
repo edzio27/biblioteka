@@ -47,38 +47,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "391977088.51362"
+         timestampString = "391986219.639948"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
-         landmarkName = "-downloadResultWithTitle:andHandler:"
+         startingLineNumber = "135"
+         endingLineNumber = "135"
+         landmarkName = "-downloadDetailPositionWithURL:andHandler:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/ViewController.m"
-         timestampString = "391976583.645347"
+         filePath = "TanieChlanie/ViewControllers/ResultSearchViewController.m"
+         timestampString = "391986264.517798"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "145"
-         endingLineNumber = "145"
-         landmarkName = "-showAll"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "391977646.815247"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "115"
-         endingLineNumber = "115"
-         landmarkName = "-downloadResultWithTitle:andHandler:"
+         startingLineNumber = "95"
+         endingLineNumber = "95"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -86,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "391977658.704785"
+         timestampString = "391986364.574512"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "109"
-         endingLineNumber = "109"
+         startingLineNumber = "84"
+         endingLineNumber = "84"
          landmarkName = "-downloadResultWithTitle:andHandler:"
          landmarkType = "5">
       </FileBreakpoint>

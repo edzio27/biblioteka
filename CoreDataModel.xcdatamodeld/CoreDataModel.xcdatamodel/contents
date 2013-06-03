@@ -2,8 +2,15 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Position" representedClassName="Position" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mainURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PositionDetail" representedClassName="PositionDetail" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="library" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="termin" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Product" representedClassName="Product" syncable="YES">
         <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,6 +30,7 @@
     <elements>
         <element name="Product" positionX="-63" positionY="-9" width="128" height="195"/>
         <element name="Shop" positionX="169" positionY="63" width="128" height="60"/>
-        <element name="Position" positionX="-281" positionY="9" width="128" height="90"/>
+        <element name="Position" positionX="-281" positionY="9" width="128" height="105"/>
+        <element name="PositionDetail" positionX="-279" positionY="171" width="128" height="105"/>
     </elements>
 </model>

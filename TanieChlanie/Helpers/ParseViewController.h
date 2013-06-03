@@ -18,6 +18,7 @@
 
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
 - (void)downloadResultWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
+- (void)downloadDetailPositionWithURL:(NSString *)url andHandler:(void(^)(NSMutableDictionary *result))handler;
 
 @property (nonatomic, weak) id<HideIndicatorDelegate> delegate;
 

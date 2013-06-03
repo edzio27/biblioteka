@@ -14,5 +14,6 @@
 @dynamic title;
 @dynamic year;
 @dynamic author;
+@dynamic mainURL;
 
 @end

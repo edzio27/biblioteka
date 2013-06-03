@@ -15,5 +15,6 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * year;
 @property (nonatomic, retain) NSString * author;
+@property (nonatomic, retain) NSString * mainURL;
 
 @end

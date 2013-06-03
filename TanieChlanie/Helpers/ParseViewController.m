@@ -11,8 +11,9 @@
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 #import "HTMLParser.h"
+#import "PositionDetail.h"
 
-#define URL @"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN-24432?func=find-b&request=piekara&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4="
+#define URL @"http://80.53.118.28"
 
 @interface ParseViewController ()
 
@@ -112,7 +113,8 @@
                 NSManagedObject *position = [NSEntityDescription
                                                       insertNewObjectForEntityForName:@"Position"
                                                       inManagedObjectContext:self.managedObjectContext];
-                NSLog(@" %@", ((HTMLNode *)[inputNodes objectAtIndex:5]).contents);
+                NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                [position setValue:url forKey:@"mainURL"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
@@ -130,6 +132,50 @@
     [operation start];
 }
 
+- (void)downloadDetailPositionWithURL:(NSString *)url andHandler:(void(^)(NSMutableDictionary *result))handler {
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:url]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                            path:nil
+                                                      parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString* responseString = [[NSString alloc] initWithData:responseObject
+                                                         encoding:NSUTF8StringEncoding];
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
+        if (error) {
+            NSLog(@"Error: %@", error);
+            return;
+        }
+        NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
+        HTMLNode *bodyNode = [parser body];
+        NSArray *selectNode = [bodyNode findChildTags:@"tr"];
+        [self clearEntity:@"PositionDetail"];
+        for(int j = 12; j < selectNode.count - 1; j++) {
+            NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
+            /* core data store */
+            NSManagedObject *position = [NSEntityDescription
+                                         insertNewObjectForEntityForName:@"PositionDetail"
+                                         inManagedObjectContext:self.managedObjectContext];
+            [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"status"];
+            [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"termin"];
+            [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"library"];
+            [position setValue:((HTMLNode *)[inputNodes objectAtIndex:5]).contents forKey:@"amount"];
+            
+            if (![self.managedObjectContext save:&error]) {
+                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+            }
+            
+        }
+        handler(diciotnary);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    [operation start];
+}
 
 - (void)cancelAllOperations {
     [self.queue cancelAllOperations];
@@ -154,6 +200,7 @@
 
 - (void)removeDataFromDatabase {
     [self clearEntity:@"Position"];
+    [self clearEntity:@"PositionDetail"];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
