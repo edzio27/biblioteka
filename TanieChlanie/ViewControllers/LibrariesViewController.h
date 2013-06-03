@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CheckLibraryDelegate <NSObject>
+
+- (void)libraryWasChecked:(NSString *)libraryTitle;
+
+@end
+
 @interface LibrariesViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *libraryDictionary;
+@property (nonatomic, weak) id<CheckLibraryDelegate> delegate;
 
 @end

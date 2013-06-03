@@ -161,6 +161,7 @@
             [self.progressHUD removeFromSuperview];
             self.progressHUD = nil;
             LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
+            libraries.delegate = self;
             libraries.libraryDictionary = result;
             [self.navigationController pushViewController:libraries animated:YES];
         }];
@@ -202,6 +203,10 @@
     self.progressHUD = nil;
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Błąd połączenia" message:@"Przekoczono limit czasu!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
     [alertView show];
+}
+
+- (void)libraryWasChecked:(NSString *)libraryTitle {
+    [self.button2 setTitle:libraryTitle forState:UIControlStateNormal];
 }
 
 @end

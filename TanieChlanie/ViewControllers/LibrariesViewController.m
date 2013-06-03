@@ -7,6 +7,7 @@
 //
 
 #import "LibrariesViewController.h"
+#import "ViewController.h"
 
 @interface LibrariesViewController ()
 
@@ -80,7 +81,7 @@
     UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:identifier];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
+
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
@@ -92,12 +93,18 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    [self.delegate libraryWasChecked:[self.titleArray objectAtIndex:indexPath.row]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60.0f;
 }
+
+#pragma mark -
+#pragma mark view implementation
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
