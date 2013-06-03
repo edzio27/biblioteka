@@ -16,8 +16,9 @@
 
 @interface ParseViewController : UIViewController
 
-- (void)downloadHTMLResponseWithTitle:(NSString *)title andHandler:(void(^)(NSString *result))handler;
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
+- (void)downloadResultWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
+
 @property (nonatomic, weak) id<HideIndicatorDelegate> delegate;
 
 @end

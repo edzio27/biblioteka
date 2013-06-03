@@ -15,6 +15,7 @@
 #import "Reachability.h"
 #import "MBProgressHUD.h"
 #import "LibrariesViewController.h"
+#import "ResultSearchViewController.h"
 
 @interface ViewController ()
 
@@ -66,7 +67,7 @@
 
 - (UIButton *)button2 {
     if(_button2 == nil) {
-        _button2 = [[UIButton alloc] initWithFrame:CGRectMake(70, 240, 180, 40)];
+        _button2 = [[UIButton alloc] initWithFrame:CGRectMake(20, 240, 280, 40)];
         _button2.layer.cornerRadius = 10.0f;
         _button2.layer.masksToBounds = YES;
         _button2.titleLabel.textColor = [UIColor whiteColor];
@@ -137,11 +138,11 @@
         NSString *title = @"piekara";
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
-        [parse downloadHTMLResponseWithTitle:title andHandler:^(NSString *result) {
+        [parse downloadResultWithTitle:title andHandler:^(NSMutableDictionary *result) {
             [self.progressHUD hide:YES];
             [self.progressHUD removeFromSuperview];
             self.progressHUD = nil;
-            ProductsListViewController *products = [[ProductsListViewController alloc] init];
+            ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
             [self.navigationController pushViewController:products animated:YES];
         }];
     } else {

@@ -42,23 +42,6 @@
     return _managedObjectContext;
 }
 
-- (void)downloadHTMLResponseWithTitle:(NSString *)title andHandler:(void(^)(NSString *result))handler {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN-24432?func=find-b&request=%@&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
-                                                            path:nil
-                                                      parameters:nil];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // Print the response body in text
-        NSLog(@"response %@", responseObject);
-        handler(@"");
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    [operation start];
-}
-
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/VEP32KG3SKCYD4IYMDH3VSBI43ICXD2UM76GYX93HIYC3C1BTP-06508?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
@@ -97,60 +80,60 @@
     [operation start];
 }
 
+- (void)downloadResultWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/VEP32KG3SKCYD4IYMDH3VSBI43ICXD2UM76GYX93HIYC3C1BTP-06508?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                            path:nil
+                                                      parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString* responseString = [[NSString alloc] initWithData:responseObject
+                                                         encoding:NSUTF8StringEncoding];
+        NSLog(@"res %@", responseString);
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
+        if (error) {
+            NSLog(@"Error: %@", error);
+            return;
+        }
+        
+        NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
+        HTMLNode *bodyNode = [parser body];
+        NSArray *selectNode = [bodyNode findChildTags:@"tr"];
+        [self removeDataFromDatabase];
+        for(int j = 0; j < selectNode.count; j++) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
+                NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
+                NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
+                NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
+                
+                NSManagedObject *position = [NSEntityDescription
+                                                      insertNewObjectForEntityForName:@"Position"
+                                                      inManagedObjectContext:self.managedObjectContext];
+                NSLog(@" %@", ((HTMLNode *)[inputNodes objectAtIndex:5]).contents);
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
+
+                if (![self.managedObjectContext save:&error]) {
+                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                }
+            }
+        }
+        handler(diciotnary);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    [operation start];
+}
+
+
 - (void)cancelAllOperations {
     [self.queue cancelAllOperations];
     [self.delegate hideIndicator];
-}
-
-- (void)parseDictionaryToCoreDataModel:(NSDictionary *)dictionary {
-    for(NSDictionary *dict in dictionary) {
-        NSDictionary *productDictionary = [dict objectForKey:@"fields"];
-        
-        NSManagedObjectContext *context = [self managedObjectContext];
-        NSManagedObject *failedBankInfo = [NSEntityDescription
-                                           insertNewObjectForEntityForName:@"Product"
-                                           inManagedObjectContext:context];
-        
-        [failedBankInfo setValue:[productDictionary objectForKey:@"name"] forKey:@"name"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"price"] forKey:@"price"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"literprice"] forKey:@"priceForLiter"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"end_date"] forKey:@"endDate"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"start_date"] forKey:@"startDate"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"product_image"] forKey:@"imageURL"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"url"] forKey:@"productURL"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"size"] forKey:@"size"];
-        [failedBankInfo setValue:[productDictionary objectForKey:@"quantity"] forKey:@"quantity"];
-
-
-        if(![self getManagetObjectWithName:[productDictionary objectForKey:@"shop"]]) {
-            NSManagedObject *failedBankDetails = [NSEntityDescription
-                                                  insertNewObjectForEntityForName:@"Shop"
-                                                  inManagedObjectContext:self.managedObjectContext];
-            [failedBankDetails setValue:[productDictionary objectForKey:@"shop"] forKey:@"name"];
-            [failedBankInfo setValue:failedBankDetails forKey:@"shop"];
-        } else {
-            [failedBankInfo setValue:[self getManagetObjectWithName:[productDictionary objectForKey:@"shop"]] forKey:@"shop"];
-        }
-        
-        NSError *error;
-        if (![context save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-    }
-}
-
-- (NSManagedObject *)getManagetObjectWithName:(NSString *)shopName {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shop" inManagedObjectContext:self.managedObjectContext];
-    [request setEntity:entity];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"name = %@", shopName]];
-    
-    NSError *error = nil;
-    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if(array.count > 0) {
-        return [array objectAtIndex:0];
-    }
-    return nil;
 }
 
 - (void)clearEntity:(NSString *)entity {
@@ -170,8 +153,7 @@
 }
 
 - (void)removeDataFromDatabase {
-    [self clearEntity:@"Product"];
-    [self clearEntity:@"Shop"];
+    [self clearEntity:@"Position"];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

@@ -56,6 +56,8 @@
 		DB19B9A5175BDC4900801744 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB19B9A4175BDC4900801744 /* libxml2.dylib */; };
 		DB19B9A9175BEEB400801744 /* LibrariesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19B9A7175BEEB400801744 /* LibrariesViewController.m */; };
 		DB19B9AA175BEEB400801744 /* LibrariesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB19B9A8175BEEB400801744 /* LibrariesViewController.xib */; };
+		DB19B9AE175CFEF800801744 /* ResultSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19B9AC175CFEF800801744 /* ResultSearchViewController.m */; };
+		DB19B9AF175CFEF800801744 /* ResultSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB19B9AD175CFEF800801744 /* ResultSearchViewController.xib */; };
 		DB35C1AD1755559D00F66EA1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1AC1755559D00F66EA1 /* MBProgressHUD.m */; };
 		DB35C1B1175556FB00F66EA1 /* ShopListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1AF175556FB00F66EA1 /* ShopListViewController.m */; };
 		DB35C1B2175556FB00F66EA1 /* ShopListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB35C1B0175556FB00F66EA1 /* ShopListViewController.xib */; };
@@ -64,6 +66,7 @@
 		DB35C1C21755D32100F66EA1 /* TMMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1BF1755D32100F66EA1 /* TMMemoryCache.m */; };
 		DB35C1C71756AE6B00F66EA1 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1C51756AE6B00F66EA1 /* SearchViewController.m */; };
 		DB35C1C81756AE6B00F66EA1 /* SearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB35C1C61756AE6B00F66EA1 /* SearchViewController.xib */; };
+		DB9F52F5175D12FE00FC323E /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52F4175D12FE00FC323E /* Position.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -142,6 +145,9 @@
 		DB19B9A6175BEEB400801744 /* LibrariesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibrariesViewController.h; sourceTree = "<group>"; };
 		DB19B9A7175BEEB400801744 /* LibrariesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibrariesViewController.m; sourceTree = "<group>"; };
 		DB19B9A8175BEEB400801744 /* LibrariesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LibrariesViewController.xib; sourceTree = "<group>"; };
+		DB19B9AB175CFEF800801744 /* ResultSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultSearchViewController.h; sourceTree = "<group>"; };
+		DB19B9AC175CFEF800801744 /* ResultSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultSearchViewController.m; sourceTree = "<group>"; };
+		DB19B9AD175CFEF800801744 /* ResultSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ResultSearchViewController.xib; sourceTree = "<group>"; };
 		DB35C1AB1755559D00F66EA1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		DB35C1AC1755559D00F66EA1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		DB35C1AE175556FB00F66EA1 /* ShopListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopListViewController.h; sourceTree = "<group>"; };
@@ -156,6 +162,8 @@
 		DB35C1C41756AE6B00F66EA1 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		DB35C1C51756AE6B00F66EA1 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		DB35C1C61756AE6B00F66EA1 /* SearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchViewController.xib; sourceTree = "<group>"; };
+		DB9F52F3175D12FE00FC323E /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
+		DB9F52F4175D12FE00FC323E /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +290,8 @@
 				DB19B99417593FB500801744 /* Product.h */,
 				DB19B99517593FB500801744 /* Product.m */,
 				DB0259011753E901006F604E /* CoreDataModel.xcdatamodeld */,
+				DB9F52F3175D12FE00FC323E /* Position.h */,
+				DB9F52F4175D12FE00FC323E /* Position.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -331,6 +341,9 @@
 				DB19B9A6175BEEB400801744 /* LibrariesViewController.h */,
 				DB19B9A7175BEEB400801744 /* LibrariesViewController.m */,
 				DB19B9A8175BEEB400801744 /* LibrariesViewController.xib */,
+				DB19B9AB175CFEF800801744 /* ResultSearchViewController.h */,
+				DB19B9AC175CFEF800801744 /* ResultSearchViewController.m */,
+				DB19B9AD175CFEF800801744 /* ResultSearchViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -478,6 +491,7 @@
 				DB19B98E1759335B00801744 /* logo.png in Resources */,
 				DB19B9901759349600801744 /* logo@2x.png in Resources */,
 				DB19B9AA175BEEB400801744 /* LibrariesViewController.xib in Resources */,
+				DB19B9AF175CFEF800801744 /* ResultSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +532,8 @@
 				DB19B9A2175BDB1900801744 /* HTMLNode.m in Sources */,
 				DB19B9A3175BDB1900801744 /* HTMLParser.m in Sources */,
 				DB19B9A9175BEEB400801744 /* LibrariesViewController.m in Sources */,
+				DB19B9AE175CFEF800801744 /* ResultSearchViewController.m in Sources */,
+				DB9F52F5175D12FE00FC323E /* Position.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB0258D51753DBDC006F604E"
-               BuildableName = "TanieChlanie.app"
+               BuildableName = "Biblioteka.app"
                BlueprintName = "Biblioteka"
                ReferencedContainer = "container:Biblioteka.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB0258D51753DBDC006F604E"
-            BuildableName = "TanieChlanie.app"
+            BuildableName = "Biblioteka.app"
             BlueprintName = "Biblioteka"
             ReferencedContainer = "container:Biblioteka.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB0258D51753DBDC006F604E"
-            BuildableName = "TanieChlanie.app"
+            BuildableName = "Biblioteka.app"
             BlueprintName = "Biblioteka"
             ReferencedContainer = "container:Biblioteka.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB0258D51753DBDC006F604E"
-            BuildableName = "TanieChlanie.app"
+            BuildableName = "Biblioteka.app"
             BlueprintName = "Biblioteka"
             ReferencedContainer = "container:Biblioteka.xcodeproj">
          </BuildableReference>
