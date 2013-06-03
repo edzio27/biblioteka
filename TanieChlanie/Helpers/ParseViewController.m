@@ -60,7 +60,7 @@
 }
 
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN-24432?func=find-b&request=%@&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN?func=find-b&request=%@&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -70,6 +70,7 @@
         
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
+        NSLog(@"res %@", responseString);
         NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
         if (error) {
@@ -77,15 +78,19 @@
             return;
         }
         
-        HTMLNode *bodyNode = [parser body];
-        HTMLNode *selectNode = [bodyNode findChildTag:@"select"];
-        NSArray *inputNodes = [selectNode findChildTags:@"option"];
         NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
-        for (HTMLNode *spanNode in inputNodes) {
-            [diciotnary setObject:spanNode.contents forKey:[spanNode getAttributeNamed:@"value"]];
+        HTMLNode *bodyNode = [parser body];
+        NSArray *selectNode = [bodyNode findChildTags:@"select"];
+        for(int j = 0; j < selectNode.count; j++) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"name"] isEqualToString:@"local_base"]) {
+                NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"option"];
+                for (HTMLNode *spanNode in inputNodes) {
+                    [diciotnary setObject:spanNode.contents forKey:[spanNode getAttributeNamed:@"value"]];
+                }
+            }
         }
         handler(diciotnary);
-        
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
