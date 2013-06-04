@@ -16,8 +16,9 @@
 
 @interface ParseViewController : UIViewController
 
+- (void)findSearchPathWithCookie:(void(^)(NSString *result))handler;
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
-- (void)downloadResultWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
+- (void)downloadResultWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler;
 - (void)downloadDetailPositionWithURL:(NSString *)url andHandler:(void(^)(NSMutableDictionary *result))handler;
 
 @property (nonatomic, weak) id<HideIndicatorDelegate> delegate;

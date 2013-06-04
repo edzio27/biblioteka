@@ -19,14 +19,27 @@
 
 @interface ViewController ()
 
-@property (nonatomic, strong) UIImageView *titleLabel;
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) MBProgressHUD *progressHUD;
+@property (nonatomic, strong) IBOutlet UITextField *textField;
 
 @end
 
 @implementation ViewController
 
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    NSLog(@"textFieldShouldEndEditing");
+    textField.backgroundColor = [UIColor whiteColor];
+    return YES;
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    NSLog(@"textFieldDidEndEditing");
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
 - (MBProgressHUD *)progressHUD {
     if(_progressHUD == nil) {
         _progressHUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -52,12 +65,12 @@
 
 - (UIButton *)button1 {
     if(_button1 == nil) {
-        _button1 = [[UIButton alloc] initWithFrame:CGRectMake(70, 180, 180, 40)];
+        _button1 = [[UIButton alloc] initWithFrame:CGRectMake(20, 200, 280, 40)];
         _button1.layer.cornerRadius = 10.0f;
         _button1.layer.masksToBounds = YES;
         _button1.titleLabel.textColor = [UIColor whiteColor];
         _button1.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_button1 setTitle:@"Pokaż wszystkie" forState:UIControlStateNormal];
+        [_button1 setTitle:@"Wyszukaj" forState:UIControlStateNormal];
         _button1.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:17];
         [_button1 setBackgroundColor:[UIColor colorWithRed:0.608 green:0.518 blue:0.953 alpha:1.0]];
         [_button1 addTarget:self action:@selector(showAll) forControlEvents:UIControlEventTouchUpInside];
@@ -67,7 +80,7 @@
 
 - (UIButton *)button2 {
     if(_button2 == nil) {
-        _button2 = [[UIButton alloc] initWithFrame:CGRectMake(20, 240, 280, 40)];
+        _button2 = [[UIButton alloc] initWithFrame:CGRectMake(20, 250, 280, 40)];
         _button2.layer.cornerRadius = 10.0f;
         _button2.layer.masksToBounds = YES;
         _button2.titleLabel.textColor = [UIColor whiteColor];
@@ -78,30 +91,6 @@
         [_button2 addTarget:self action:@selector(showLibraries) forControlEvents:UIControlEventTouchUpInside];
     }
     return _button2;
-}
-
-- (UIButton *)button3 {
-    if(_button3 == nil) {
-        _button3 = [[UIButton alloc] initWithFrame:CGRectMake(70, 300, 180, 40)];
-        _button3.layer.cornerRadius = 10.0f;
-        _button3.layer.masksToBounds = YES;
-        _button3.titleLabel.textColor = [UIColor whiteColor];
-        _button3.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_button3 setTitle:@"Wyszukaj" forState:UIControlStateNormal];
-        _button3.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:17];
-        [_button3 setBackgroundColor:[UIColor colorWithRed:0.608 green:0.518 blue:0.953 alpha:1.0]];
-        [_button3 addTarget:self action:@selector(showSearchResult) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _button3;
-}
-
-- (UIImageView *)titleLabel {
-    if(_titleLabel == nil) {
-        _titleLabel = [[UIImageView alloc] initWithFrame:CGRectMake(0, 60, 320, 75)];
-        _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.image = [UIImage imageNamed:@"logo"];
-    }
-    return _titleLabel;
 }
 
 - (UILabel *)authorLabel {
@@ -135,15 +124,17 @@
 - (void)showAll {
     if([self isThereInternetConnection]) {
         [self.progressHUD show:YES];
-        NSString *title = @"piekara";
+        NSString *title = self.textField.text;
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
-        [parse downloadResultWithTitle:title andHandler:^(NSMutableDictionary *result) {
-            [self.progressHUD hide:YES];
-            [self.progressHUD removeFromSuperview];
-            self.progressHUD = nil;
-            ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
-            [self.navigationController pushViewController:products animated:YES];
+        [parse findSearchPathWithCookie:^(NSString *result) {
+            [parse downloadResultWithTitle:title cookie:result andHandler:^(NSMutableDictionary *result) {
+                [self.progressHUD hide:YES];
+                [self.progressHUD removeFromSuperview];
+                self.progressHUD = nil;
+                ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
+                [self.navigationController pushViewController:products animated:YES];
+            }];
         }];
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Błąd połączenia" message:@"Brak połączenia z siecią" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -177,8 +168,6 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.322 green:0.314 blue:0.345 alpha:1.0];
     [self.view addSubview:self.button1];
     [self.view addSubview:self.button2];
-    [self.view addSubview:self.button3];
-    [self.view addSubview:self.authorLabel];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -188,7 +177,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view addSubview:self.titleLabel];
+    self.textField.returnKeyType = UIReturnKeyDone;
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

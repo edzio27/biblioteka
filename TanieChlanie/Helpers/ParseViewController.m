@@ -43,8 +43,51 @@
     return _managedObjectContext;
 }
 
+- (void)findSearchPathWithCookie:(void(^)(NSString *result))handler {
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/F", URL]]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                            path:nil
+                                                      parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString* responseString = [[NSString alloc] initWithData:responseObject
+                                                         encoding:NSUTF8StringEncoding];
+        NSLog(@"res %@", responseString);
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
+        if (error) {
+            NSLog(@"Error: %@", error);
+            return;
+        }
+        
+        NSString *string = nil;
+        HTMLNode *bodyNode = [parser body];
+        NSArray *selectNode = [bodyNode findChildTags:@"tr"];
+        for(int j = 0; j < selectNode.count; j++) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"class"] isEqualToString:@"middlebar"]) {
+                NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
+                if(inputNodes.count > 1) {
+                    NSLog(@"%@", [[inputNodes objectAtIndex:1] getAttributeNamed:@"href"]);
+                    string = [[inputNodes objectAtIndex:1] getAttributeNamed:@"href"];
+                    NSArray *array = [string componentsSeparatedByString:@"?"];
+                    string = [array objectAtIndex:0];
+                }
+            }
+        }
+        NSLog(@"strin %@", string);
+        handler(string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    [operation start];
+}
+
+
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/VEP32KG3SKCYD4IYMDH3VSBI43ICXD2UM76GYX93HIYC3C1BTP-06508?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN-24432?func=find-b&request=%@&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -81,8 +124,8 @@
     [operation start];
 }
 
-- (void)downloadResultWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/VEP32KG3SKCYD4IYMDH3VSBI43ICXD2UM76GYX93HIYC3C1BTP-06508?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
+- (void)downloadResultWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28%@?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", cookie, title]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];

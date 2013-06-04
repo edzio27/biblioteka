@@ -634,16 +634,16 @@
 		DB0258FA1753DBDC006F604E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Eugeniusz Keptia (U3N98SCUDN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eugeniusz Keptia (U3N98SCUDN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eugeniusz Keptia (9AYU9PFC7E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugeniusz Keptia (9AYU9PFC7E)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TanieChlanie/Biblioteka-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
 				INFOPLIST_FILE = "TanieChlanie/Biblioteka-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Biblioteka;
-				PROVISIONING_PROFILE = "8A871430-A0D0-4AB6-B098-79A13EB32D3C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A871430-A0D0-4AB6-B098-79A13EB32D3C";
+				PROVISIONING_PROFILE = "6F0D649C-FA16-417B-B486-31B089DDD2A4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6F0D649C-FA16-417B-B486-31B089DDD2A4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -651,16 +651,16 @@
 		DB0258FB1753DBDC006F604E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Eugeniusz Keptia (U3N98SCUDN)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eugeniusz Keptia (U3N98SCUDN)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eugeniusz Keptia (9AYU9PFC7E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eugeniusz Keptia (9AYU9PFC7E)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TanieChlanie/Biblioteka-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"/usr/include/libxml2\"";
 				INFOPLIST_FILE = "TanieChlanie/Biblioteka-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = Biblioteka;
-				PROVISIONING_PROFILE = "8A871430-A0D0-4AB6-B098-79A13EB32D3C";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8A871430-A0D0-4AB6-B098-79A13EB32D3C";
+				PROVISIONING_PROFILE = "6F0D649C-FA16-417B-B486-31B089DDD2A4";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6F0D649C-FA16-417B-B486-31B089DDD2A4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

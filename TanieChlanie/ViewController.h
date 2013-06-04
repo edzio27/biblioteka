@@ -12,10 +12,9 @@
 #import "ParseViewController.h"
 #import "LibrariesViewController.h"
 
-@interface ViewController : UIViewController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate, HideIndicatorDelegate, CheckLibraryDelegate>
+@interface ViewController : UIViewController <MFMailComposeViewControllerDelegate, MBProgressHUDDelegate, HideIndicatorDelegate, CheckLibraryDelegate, UITextFieldDelegate>
 
 @property (nonatomic, strong) UIButton *button1;
 @property (nonatomic, strong) UIButton *button2;
-@property (nonatomic, strong) UIButton *button3;
 
 @end
