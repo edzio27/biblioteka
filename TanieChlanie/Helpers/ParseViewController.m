@@ -77,6 +77,8 @@
             }
         }
         NSLog(@"strin %@", string);
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.cookieString = string;
         handler(string);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -211,6 +213,60 @@
                 NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
             }
             
+        }
+        handler(diciotnary);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    [operation start];
+}
+
+- (void)downloadMoreResultsPart:(NSString *) partNumber andHandler:(void (^)(NSMutableDictionary *))handler {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:
+                                                                      [NSString stringWithFormat:@"%@%@?func=short-jump&amp;jump=%@", URL, appDelegate.cookieString, partNumber]]];
+    NSLog(@"%@", [NSString stringWithFormat:@"%@%@?func=short-jump&jump=%@", URL, appDelegate.cookieString, partNumber]);
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                            path:nil
+                                                      parameters:nil];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSString* responseString = [[NSString alloc] initWithData:responseObject
+                                                         encoding:NSUTF8StringEncoding];
+        NSLog(@"res %@", responseString);
+        NSError *error = nil;
+        HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
+        if (error) {
+            NSLog(@"Error: %@", error);
+            return;
+        }
+        
+        NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
+        HTMLNode *bodyNode = [parser body];
+        NSArray *selectNode = [bodyNode findChildTags:@"tr"];
+        //[self removeDataFromDatabase];
+        for(int j = 0; j < selectNode.count; j++) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
+                NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
+                NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
+                NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
+                
+                NSManagedObject *position = [NSEntityDescription
+                                             insertNewObjectForEntityForName:@"Position"
+                                             inManagedObjectContext:self.managedObjectContext];
+                NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                [position setValue:url forKey:@"mainURL"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
+                
+                if (![self.managedObjectContext save:&error]) {
+                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                }
+            }
         }
         handler(diciotnary);
         

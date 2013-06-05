@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) ViewController *viewController;
+@property (nonatomic, strong) NSString *cookieString;
 
 /* core data */
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;

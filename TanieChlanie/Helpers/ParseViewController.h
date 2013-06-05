@@ -16,6 +16,7 @@
 
 @interface ParseViewController : UIViewController
 
+- (void)downloadMoreResultsPart:(NSString *) partNumber andHandler:(void (^)(NSMutableDictionary *))handler;
 - (void)findSearchPathWithCookie:(void(^)(NSString *result))handler;
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
 - (void)downloadResultWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler;

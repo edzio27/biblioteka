@@ -14,16 +14,40 @@
 #import "ParseViewController.h"
 #import "Reachability.h"
 
+static int searchValue;
+
 @interface ResultSearchViewController ()
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSMutableArray *positionList;
 @property (nonatomic, strong) MBProgressHUD *progressHUD;
+@property (nonatomic, strong) UIButton *loadMoreButton;
 
 @end
 
 @implementation ResultSearchViewController
+
+- (UIButton *)loadMoreButton {
+    if(_loadMoreButton == nil) {
+        _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 350, 300, 40)];
+        _loadMoreButton.backgroundColor = [UIColor redColor];
+        _loadMoreButton.titleLabel.textColor = [UIColor whiteColor];
+        [_loadMoreButton setTitle:@"Więcej wyników" forState:UIControlStateNormal];
+        [_loadMoreButton addTarget:self action:@selector(saoaMore) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _loadMoreButton;
+}
+
+- (void)showMore {
+    searchValue++;
+    NSString *value = [NSString stringWithFormat:@"%d", 10*searchValue + 1];
+    ParseViewController *parser = [[ParseViewController alloc] init];
+    [parser downloadMoreResultsPart:value andHandler:^(NSMutableDictionary *handler) {
+        self.positionList = nil;
+        [self.tableView reloadData];
+    }];
+}
 
 - (NSManagedObjectContext *)managedObjectContext {
     if(_managedObjectContext == nil) {
@@ -54,7 +78,7 @@
                                           [[UIScreen mainScreen] bounds].size.width,
                                           [[UIScreen mainScreen] bounds].size.height
                                           - self.navigationController.navigationBar.frame.size.height
-                                          - [UIApplication sharedApplication].statusBarFrame.size.height - 30);
+                                          - [UIApplication sharedApplication].statusBarFrame.size.height - 80);
         _tableView = [[UITableView alloc] initWithFrame:rectTableView style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -133,6 +157,8 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.loadMoreButton];
+    searchValue = 0;
     // Do any additional setup after loading the view from its nib.
 }
 
