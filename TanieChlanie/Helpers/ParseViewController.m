@@ -126,8 +126,8 @@
     [operation start];
 }
 
-- (void)downloadResultWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28%@?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", cookie, title]]];
+- (void)downloadResultWithTitle:(NSString *)title library:(NSString *)library cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28%@?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=%@&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", cookie, title, library]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -222,11 +222,12 @@
     [operation start];
 }
 
-- (void)downloadMoreResultsPart:(NSString *) partNumber andHandler:(void (^)(NSMutableDictionary *))handler {
+- (void)downloadMoreResultsPart:(NSString *) partNumber title:(NSString *)title andHandler:(void (^)(NSMutableDictionary *))handler {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:
-                                                                      [NSString stringWithFormat:@"%@%@?func=short-jump&amp;jump=%@", URL, appDelegate.cookieString, partNumber]]];
-    NSLog(@"%@", [NSString stringWithFormat:@"%@%@?func=short-jump&jump=%@", URL, appDelegate.cookieString, partNumber]);
+                                                                      [NSString stringWithFormat:
+                                                                       @"http://80.53.118.28%@?func=short-jump&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&jump=%@&filter_code_4=WFT&filter_request_4=", appDelegate.cookieString, title, partNumber]]];
+    NSLog(@"%@", [NSString stringWithFormat:@"%@%@?func=short-jump&jump=0000%@", URL, appDelegate.cookieString, partNumber]);
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -250,6 +251,7 @@
         //[self removeDataFromDatabase];
         for(int j = 0; j < selectNode.count; j++) {
             if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
+                NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
                 NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
                 NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);

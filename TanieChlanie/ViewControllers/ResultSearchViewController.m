@@ -34,7 +34,7 @@ static int searchValue;
         _loadMoreButton.backgroundColor = [UIColor redColor];
         _loadMoreButton.titleLabel.textColor = [UIColor whiteColor];
         [_loadMoreButton setTitle:@"Więcej wyników" forState:UIControlStateNormal];
-        [_loadMoreButton addTarget:self action:@selector(saoaMore) forControlEvents:UIControlEventTouchUpInside];
+        [_loadMoreButton addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
     }
     return _loadMoreButton;
 }
@@ -43,7 +43,7 @@ static int searchValue;
     searchValue++;
     NSString *value = [NSString stringWithFormat:@"%d", 10*searchValue + 1];
     ParseViewController *parser = [[ParseViewController alloc] init];
-    [parser downloadMoreResultsPart:value andHandler:^(NSMutableDictionary *handler) {
+    [parser downloadMoreResultsPart:value title:self.positionTitle andHandler:^(NSMutableDictionary *handler) {
         self.positionList = nil;
         [self.tableView reloadData];
     }];

@@ -16,10 +16,10 @@
 
 @interface ParseViewController : UIViewController
 
-- (void)downloadMoreResultsPart:(NSString *) partNumber andHandler:(void (^)(NSMutableDictionary *))handler;
+- (void)downloadMoreResultsPart:(NSString *) partNumber title:(NSString *)title andHandler:(void (^)(NSMutableDictionary *))handler;
 - (void)findSearchPathWithCookie:(void(^)(NSString *result))handler;
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler;
-- (void)downloadResultWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler;
+- (void)downloadResultWithTitle:(NSString *)title library:(NSString *)library cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler;
 - (void)downloadDetailPositionWithURL:(NSString *)url andHandler:(void(^)(NSMutableDictionary *result))handler;
 
 @property (nonatomic, weak) id<HideIndicatorDelegate> delegate;

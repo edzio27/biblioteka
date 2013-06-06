@@ -22,10 +22,18 @@
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) MBProgressHUD *progressHUD;
 @property (nonatomic, strong) IBOutlet UITextField *textField;
+@property (nonatomic, strong) NSMutableDictionary *libraries;
 
 @end
 
 @implementation ViewController
+
+- (NSMutableDictionary *)libraries {
+    if(_libraries == nil) {
+        _libraries = [[NSMutableDictionary alloc] init];
+    }
+    return _libraries;
+}
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
     NSLog(@"textFieldShouldEndEditing");
@@ -127,12 +135,22 @@
         NSString *title = self.textField.text;
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
+        NSLog(@"%@", self.button2.titleLabel.text);
+        NSLog(@"%@", self.libraries);
+        NSArray *array = [self.libraries allKeysForObject:self.button2.titleLabel.text];
+        NSString *value = nil;
+        if(array.count > 0) {
+            value = [array objectAtIndex:0];
+        } else {
+            value = @"MBP";
+        }
         [parse findSearchPathWithCookie:^(NSString *result) {
-            [parse downloadResultWithTitle:title cookie:result andHandler:^(NSMutableDictionary *result) {
+            [parse downloadResultWithTitle:title library:value cookie:result andHandler:^(NSMutableDictionary *result) {
                 [self.progressHUD hide:YES];
                 [self.progressHUD removeFromSuperview];
                 self.progressHUD = nil;
                 ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
+                products.positionTitle = title;
                 [self.navigationController pushViewController:products animated:YES];
             }];
         }];
@@ -154,6 +172,7 @@
             self.progressHUD = nil;
             LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
             libraries.delegate = self;
+            self.libraries = result;
             libraries.libraryDictionary = result;
             [self.navigationController pushViewController:libraries animated:YES];
         }];

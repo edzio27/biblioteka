@@ -10,4 +10,6 @@
 
 @interface ResultSearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) NSString *positionTitle;
+
 @end

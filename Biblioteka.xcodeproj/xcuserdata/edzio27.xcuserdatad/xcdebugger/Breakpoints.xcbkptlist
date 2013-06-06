@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewController.m"
-         timestampString = "392067566.271652"
+         timestampString = "392156672.450246"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "62"
-         endingLineNumber = "62"
+         startingLineNumber = "70"
+         endingLineNumber = "70"
          landmarkName = "-mailComposeController:didFinishWithResult:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewController.m"
-         timestampString = "392068738.309732"
+         timestampString = "392211351.431181"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "190"
-         endingLineNumber = "190"
+         startingLineNumber = "209"
+         endingLineNumber = "209"
          landmarkName = "-hideIndicator"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,12 +34,25 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewController.m"
-         timestampString = "392068738.309732"
+         timestampString = "392157109.541386"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "198"
-         endingLineNumber = "198"
-         landmarkName = "-libraryWasChecked:"
+         startingLineNumber = "138"
+         endingLineNumber = "138"
+         landmarkName = "-showAll"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TanieChlanie/ViewControllers/ResultSearchViewController.m"
+         timestampString = "392158172.071642"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "69"
+         endingLineNumber = "69"
+         landmarkName = "-positionList"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -47,12 +60,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "392152897.612957"
+         timestampString = "392210858.967615"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "116"
-         endingLineNumber = "116"
-         landmarkName = "-downloadLibrariesWithTitle:andHandler:"
+         startingLineNumber = "273"
+         endingLineNumber = "273"
+         landmarkName = "-downloadMoreResultsPart:title:andHandler:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -60,12 +73,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "392152880.898255"
+         timestampString = "392209184.887732"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "229"
-         endingLineNumber = "229"
-         landmarkName = "-downloadMoreResultsPart:andHandler:"
+         startingLineNumber = "225"
+         endingLineNumber = "225"
+         landmarkName = "-downloadMoreResultsPart:title:andHandler:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TanieChlanie/Helpers/ParseViewController.m"
+         timestampString = "392210858.967615"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "230"
+         endingLineNumber = "230"
+         landmarkName = "-downloadMoreResultsPart:title:andHandler:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TanieChlanie/Helpers/ParseViewController.m"
+         timestampString = "392210858.967615"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "254"
+         endingLineNumber = "254"
+         landmarkName = "-downloadMoreResultsPart:title:andHandler:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TanieChlanie/Helpers/ParseViewController.m"
+         timestampString = "392210858.967615"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "240"
+         endingLineNumber = "240"
+         landmarkName = "-downloadMoreResultsPart:title:andHandler:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
