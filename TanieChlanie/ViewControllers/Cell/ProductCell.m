@@ -7,6 +7,7 @@
 //
 
 #import "ProductCell.h"
+#import "AppDelegate.h"
 
 @implementation ProductCell
 
@@ -15,23 +16,27 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 240, 40)];
+        self.backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        [self addSubview:self.backgroundView];
+        
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 55)];
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.textColor = [UIColor colorWithRed:0.322 green:0.314 blue:0.345 alpha:1.0];
-        self.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:15];
+        self.titleLabel.font = [UIFont fontWithName:@"Curier-Bold" size:13];
+        self.titleLabel.numberOfLines = 3;
         [self addSubview:self.titleLabel];
         
-        self.authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30 , 280, 30)];
+        self.authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 50 , 260, 30)];
         self.authorLabel.backgroundColor = [UIColor clearColor];
-        self.authorLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:18];
-        self.authorLabel.textColor = [UIColor colorWithRed:0.608 green:0.518 blue:0.953 alpha:1.0];
-        self.authorLabel.textAlignment = NSTextAlignmentRight;
+        self.authorLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:14];
+        self.authorLabel.textColor = RED_COLOR;
+        self.authorLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.authorLabel];
         
-        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 40, 200, 25)];
+        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 55, 40, 25)];
         self.dateLabel.backgroundColor = [UIColor clearColor];
-        self.dateLabel.textColor = [UIColor colorWithRed:0.322 green:0.314 blue:0.345 alpha:1.0];
-        self.dateLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:11];
+        self.dateLabel.textColor = RED_COLOR;
+        self.dateLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:15];
         [self addSubview:self.dateLabel];
     }
     return self;

@@ -19,7 +19,6 @@
 
 @property (nonatomic, strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, strong) NSOperationQueue *queue;
-@property (nonatomic, strong) NSData *lastDataDownloaded;
 
 @end
 
@@ -135,9 +134,10 @@
     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        self.lastDataDownloaded = (NSData *)responseObject;
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.lastDataDownloaded = responseString;
         NSLog(@"res %@", responseString);
         NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
@@ -161,8 +161,8 @@
                                                       inManagedObjectContext:self.managedObjectContext];
                 NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
                 [position setValue:url forKey:@"mainURL"];
-                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
-                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
 
                 if (![self.managedObjectContext save:&error]) {
@@ -247,8 +247,8 @@
         }
         NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
         
-        if(![(NSData *)responseObject isEqualToData:self.lastDataDownloaded]) {
-            self.lastDataDownloaded = (NSData *)responseObject;
+        if(![responseString isEqualToString:appDelegate.lastDataDownloaded]) {
+            appDelegate.lastDataDownloaded = responseString;
             HTMLNode *bodyNode = [parser body];
             NSArray *selectNode = [bodyNode findChildTags:@"tr"];
             //[self removeDataFromDatabase];
@@ -264,8 +264,8 @@
                                                  inManagedObjectContext:self.managedObjectContext];
                     NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
                     [position setValue:url forKey:@"mainURL"];
-                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
-                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
+                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
+                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
                     [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
                     
                     if (![self.managedObjectContext save:&error]) {

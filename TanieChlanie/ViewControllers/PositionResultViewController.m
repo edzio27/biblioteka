@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "PositionDetail.h"
+#import "ProductCell.h"
 
 @interface PositionResultViewController ()
 
@@ -71,21 +72,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"Identifier";
-    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:identifier];
+    ProductCell *cell =  (ProductCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[ProductCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     PositionDetail *position = [self.positionList objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@ %@", position.status, position.termin, position.library, position.amount];
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
-    cell.textLabel.textColor = [UIColor redColor];
+    cell.titleLabel.text = position.library;
+    if(position.termin == nil) {
+        cell.authorLabel.text = [NSString stringWithFormat:@"Wolne"];
+    } else {
+        cell.authorLabel.text = [NSString stringWithFormat:@"Wolne od: %@", position.termin];
+    }
+    cell.dateLabel.text = position.amount;
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //cell.textLabel.textColor = [UIColor redColor];
     if(position.termin == NULL) {
-        cell.textLabel.textColor = [UIColor greenColor];
+        //cell.textLabel.textColor = [UIColor greenColor];
     }
     
     return cell;
@@ -96,7 +103,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60.0f;
+    return 80.0f;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

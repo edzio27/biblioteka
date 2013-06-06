@@ -31,8 +31,11 @@ static int searchValue;
 
 - (UIButton *)loadMoreButton {
     if(_loadMoreButton == nil) {
-        _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 350, 300, 40)];
-        _loadMoreButton.backgroundColor = [UIColor redColor];
+        _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(10,
+                                                                     [[UIScreen mainScreen] bounds].size.height - self.navigationController.navigationBar.frame.size.height - 85,
+                                                                     300,
+                                                                     40)];
+        _loadMoreButton.backgroundColor = RED_COLOR;
         _loadMoreButton.titleLabel.textColor = [UIColor whiteColor];
         [_loadMoreButton setTitle:@"Więcej wyników" forState:UIControlStateNormal];
         [_loadMoreButton addTarget:self action:@selector(showMore) forControlEvents:UIControlEventTouchUpInside];
@@ -115,6 +118,12 @@ static int searchValue;
     cell.dateLabel.text = position.year;
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
+    if(fmod((double)indexPath.row, (double)2) == 0) {
+        cell.backgroundView.backgroundColor = [UIColor whiteColor];
+    } else {
+        cell.backgroundView.backgroundColor = GRAY_COLOR;
+    }
+    
     return cell;
 }
 
@@ -138,7 +147,7 @@ static int searchValue;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60.0f;
+    return 80.0f;
 }
 
 - (BOOL)isThereInternetConnection {
