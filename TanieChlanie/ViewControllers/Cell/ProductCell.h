@@ -12,7 +12,6 @@
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
-@property (nonatomic, strong) UIImageView *productImageView;
-@property (nonatomic, strong) UILabel *priceLabel;
+@property (nonatomic, strong) UILabel *authorLabel;
 
 @end

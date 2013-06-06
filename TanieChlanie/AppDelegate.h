@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
+#define RED_COLOR [UIColor colorWithRed:0.53 green:0.00 blue:0.17 alpha:1.00]
+#define GRAY_COLOR [UIColor colorWithRed:0.85 green:0.85 blue:0.86 alpha:1.00]
+
 @class ViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

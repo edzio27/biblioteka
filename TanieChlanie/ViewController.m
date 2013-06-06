@@ -8,14 +8,14 @@
 
 #import "ViewController.h"
 #import "ParseViewController.h"
-#import "ProductsListViewController.h"
-#import "ShopListViewController.h"
-#import "SearchViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Reachability.h"
 #import "MBProgressHUD.h"
 #import "LibrariesViewController.h"
 #import "ResultSearchViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
+
 
 @interface ViewController ()
 
@@ -73,14 +73,14 @@
 
 - (UIButton *)button1 {
     if(_button1 == nil) {
-        _button1 = [[UIButton alloc] initWithFrame:CGRectMake(20, 200, 280, 40)];
-        _button1.layer.cornerRadius = 10.0f;
+        _button1 = [[UIButton alloc] initWithFrame:CGRectMake(20, 270, 280, 50)];
+        _button1.layer.cornerRadius = 0.0f;
         _button1.layer.masksToBounds = YES;
         _button1.titleLabel.textColor = [UIColor whiteColor];
         _button1.titleLabel.textAlignment = NSTextAlignmentCenter;
         [_button1 setTitle:@"Wyszukaj" forState:UIControlStateNormal];
         _button1.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:17];
-        [_button1 setBackgroundColor:[UIColor colorWithRed:0.608 green:0.518 blue:0.953 alpha:1.0]];
+        [_button1 setBackgroundColor:RED_COLOR];
         [_button1 addTarget:self action:@selector(showAll) forControlEvents:UIControlEventTouchUpInside];
     }
     return _button1;
@@ -88,14 +88,15 @@
 
 - (UIButton *)button2 {
     if(_button2 == nil) {
-        _button2 = [[UIButton alloc] initWithFrame:CGRectMake(20, 250, 280, 40)];
-        _button2.layer.cornerRadius = 10.0f;
+        _button2 = [[UIButton alloc] initWithFrame:CGRectMake(20, 200, 280, 50)];
+        _button2.layer.cornerRadius = 0.0f;
         _button2.layer.masksToBounds = YES;
         _button2.titleLabel.textColor = [UIColor whiteColor];
         _button2.titleLabel.textAlignment = NSTextAlignmentCenter;
         [_button2 setTitle:@"Wybierz filie" forState:UIControlStateNormal];
+        _button2.titleLabel.numberOfLines = 2;
         _button2.titleLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:17];
-        [_button2 setBackgroundColor:[UIColor colorWithRed:0.608 green:0.518 blue:0.953 alpha:1.0]];
+        [_button2 setBackgroundColor:RED_COLOR];
         [_button2 addTarget:self action:@selector(showLibraries) forControlEvents:UIControlEventTouchUpInside];
     }
     return _button2;
@@ -183,10 +184,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBar.hidden = YES;
-    self.view.backgroundColor = [UIColor colorWithRed:0.322 green:0.314 blue:0.345 alpha:1.0];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.button1];
     [self.view addSubview:self.button2];
+    
+    [self.textField.layer setCornerRadius:0.0f];
+    self.textField.layer.masksToBounds = YES;
+    [self.textField setBackgroundColor:GRAY_COLOR];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -196,8 +200,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.textField.returnKeyType = UIReturnKeyDone;
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    /* custom imageview in bavigationbar */
+    UIImage *image = [[UIImage imageNamed:@"navigationbar"] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 1, 1, 1)];
+    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning

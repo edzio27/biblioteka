@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, strong) NSOperationQueue *queue;
+@property (nonatomic, strong) NSData *lastDataDownloaded;
 
 @end
 
@@ -96,7 +97,6 @@
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
         NSLog(@"res %@", responseString);
@@ -135,6 +135,7 @@
     [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        self.lastDataDownloaded = (NSData *)responseObject;
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
         NSLog(@"res %@", responseString);
@@ -244,29 +245,32 @@
             NSLog(@"Error: %@", error);
             return;
         }
-        
         NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
-        HTMLNode *bodyNode = [parser body];
-        NSArray *selectNode = [bodyNode findChildTags:@"tr"];
-        //[self removeDataFromDatabase];
-        for(int j = 0; j < selectNode.count; j++) {
-            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
-                NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
-                NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
-                NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
-                NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
-                
-                NSManagedObject *position = [NSEntityDescription
-                                             insertNewObjectForEntityForName:@"Position"
-                                             inManagedObjectContext:self.managedObjectContext];
-                NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
-                [position setValue:url forKey:@"mainURL"];
-                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
-                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
-                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
-                
-                if (![self.managedObjectContext save:&error]) {
-                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        
+        if(![(NSData *)responseObject isEqualToData:self.lastDataDownloaded]) {
+            self.lastDataDownloaded = (NSData *)responseObject;
+            HTMLNode *bodyNode = [parser body];
+            NSArray *selectNode = [bodyNode findChildTags:@"tr"];
+            //[self removeDataFromDatabase];
+            for(int j = 0; j < selectNode.count; j++) {
+                if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
+                    NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
+                    NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
+                    NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
+                    NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
+                    
+                    NSManagedObject *position = [NSEntityDescription
+                                                 insertNewObjectForEntityForName:@"Position"
+                                                 inManagedObjectContext:self.managedObjectContext];
+                    NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                    [position setValue:url forKey:@"mainURL"];
+                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"title"];
+                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"author"];
+                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
+                    
+                    if (![self.managedObjectContext save:&error]) {
+                        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                    }
                 }
             }
         }

@@ -13,6 +13,7 @@
 #import "PositionResultViewController.h"
 #import "ParseViewController.h"
 #import "Reachability.h"
+#import "ProductCell.h"
 
 static int searchValue;
 
@@ -99,17 +100,19 @@ static int searchValue;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"Identifier";
-    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:identifier];
+    ProductCell *cell =  (ProductCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[ProductCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
     Position *position = [self.positionList objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@", position.title, position.author, position.year];
+    cell.titleLabel.text = position.title;
+    cell.authorLabel.text = position.author;
+    cell.dateLabel.text = position.year;
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;
