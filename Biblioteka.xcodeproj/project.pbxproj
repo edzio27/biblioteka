@@ -48,6 +48,7 @@
 		DB0643921758B5F800C16099 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0643911758B5F800C16099 /* SystemConfiguration.framework */; };
 		DB17F0E81760E8E400F35AB7 /* navigationbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0E61760E8E400F35AB7 /* navigationbar.png */; };
 		DB17F0E91760E8E400F35AB7 /* navigationbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0E71760E8E400F35AB7 /* navigationbar@2x.png */; };
+		DB17F0ED1763178400F35AB7 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */; };
 		DB19B98E1759335B00801744 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DB19B98D1759335B00801744 /* logo.png */; };
 		DB19B9901759349600801744 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB19B98F1759349600801744 /* logo@2x.png */; };
 		DB19B99617593FB500801744 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19B99517593FB500801744 /* Product.m */; };
@@ -131,6 +132,8 @@
 		DB0643911758B5F800C16099 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DB17F0E61760E8E400F35AB7 /* navigationbar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigationbar.png; sourceTree = "<group>"; };
 		DB17F0E71760E8E400F35AB7 /* navigationbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar@2x.png"; sourceTree = "<group>"; };
+		DB17F0EB1763178400F35AB7 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
 		DB19B98D1759335B00801744 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		DB19B98F1759349600801744 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		DB19B99417593FB500801744 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 		DB0258FC1753E8B7006F604E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				DB17F0EA1763176900F35AB7 /* EncodeString */,
 				DB19B99D175BDB1900801744 /* HTMLParser */,
 				DB19B997175BD38C00801744 /* Libraries */,
 				DB06438D1758B41E00C16099 /* Reachability */,
@@ -374,6 +378,15 @@
 				DB06438F1758B41E00C16099 /* Reachability.m */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		DB17F0EA1763176900F35AB7 /* EncodeString */ = {
+			isa = PBXGroup;
+			children = (
+				DB17F0EB1763178400F35AB7 /* NSString+URLEncoding.h */,
+				DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */,
+			);
+			path = EncodeString;
 			sourceTree = "<group>";
 		};
 		DB19B997175BD38C00801744 /* Libraries */ = {
@@ -528,6 +541,7 @@
 				DB9F52F8175D23B700FC323E /* Position.m in Sources */,
 				DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */,
 				DB9F5300175D30E300FC323E /* PositionDetail.m in Sources */,
+				DB17F0ED1763178400F35AB7 /* NSString+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

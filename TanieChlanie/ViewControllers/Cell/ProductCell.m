@@ -33,11 +33,13 @@
         self.authorLabel.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.authorLabel];
         
-        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 55, 40, 25)];
+        self.dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(270, 55, 50, 25)];
         self.dateLabel.backgroundColor = [UIColor clearColor];
         self.dateLabel.textColor = RED_COLOR;
         self.dateLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:15];
         [self addSubview:self.dateLabel];
+        
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return self;
 }

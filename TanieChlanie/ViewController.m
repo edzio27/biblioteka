@@ -15,6 +15,7 @@
 #import "ResultSearchViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
+#import "NSString+URLEncoding.h"
 
 
 @interface ViewController ()
@@ -133,7 +134,7 @@
 - (void)showAll {
     if([self isThereInternetConnection]) {
         [self.progressHUD show:YES];
-        NSString *title = self.textField.text;
+        NSString *title = [NSString encodeURL:self.textField.text];
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
         NSLog(@"%@", self.button2.titleLabel.text);

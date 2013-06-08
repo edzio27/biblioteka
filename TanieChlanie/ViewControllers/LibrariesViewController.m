@@ -87,7 +87,6 @@
     }
     
     cell.textLabel.text = [self.titleArray objectAtIndex:indexPath.row];
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     return cell;
 }

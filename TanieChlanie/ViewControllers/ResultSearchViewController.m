@@ -116,7 +116,6 @@ static int searchValue;
     cell.titleLabel.text = position.title;
     cell.authorLabel.text = position.author;
     cell.dateLabel.text = position.year;
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
     if(fmod((double)indexPath.row, (double)2) == 0) {
         cell.backgroundView.backgroundColor = [UIColor whiteColor];

@@ -89,8 +89,6 @@
         cell.authorLabel.text = [NSString stringWithFormat:@"Wolne od: %@", position.termin];
     }
     cell.dateLabel.text = position.amount;
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    //cell.textLabel.textColor = [UIColor redColor];
     if(position.termin == NULL) {
         //cell.textLabel.textColor = [UIColor greenColor];
     }
