@@ -20,7 +20,7 @@
 
 @property (strong, nonatomic) ViewController *viewController;
 @property (nonatomic, strong) NSString *cookieString;
-@property (nonatomic, strong) NSString *lastDataDownloaded;
+@property (nonatomic, strong) NSString *librarySelected;
 
 /* core data */
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;

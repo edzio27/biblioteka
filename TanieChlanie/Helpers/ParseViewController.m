@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "HTMLParser.h"
 #import "PositionDetail.h"
+#import "NSString+URLEncoding.h"
+#import <CoreLocation/CoreLocation.h>
 
 #define URL @"http://80.53.118.28"
 
@@ -99,7 +101,7 @@
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
         NSLog(@"res %@", responseString);
-        NSError *error = nil;
+        __block NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
         if (error) {
             NSLog(@"Error: %@", error);
@@ -114,6 +116,33 @@
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"option"];
                 for (HTMLNode *spanNode in inputNodes) {
                     [diciotnary setObject:spanNode.contents forKey:[spanNode getAttributeNamed:@"value"]];
+                    /* get json with coordinates */
+                    NSLog(@"%@", spanNode.contents);
+                    NSArray *arrayAddress = [spanNode.contents componentsSeparatedByString:@". "];
+                    if(arrayAddress.count > 1) {
+                        //NSString *parsedString = [[arrayAddress objectAtIndex:1] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+                        NSString *parsedString = [arrayAddress objectAtIndex:1];
+                        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
+                        parsedString = [NSString stringWithFormat:@"%@ Wrocław", parsedString];
+                        NSLog(@"string %@", parsedString);
+                        
+                        /* save to core data base */
+                        NSManagedObject *position = [NSEntityDescription
+                                                     insertNewObjectForEntityForName:@"Library"
+                                                     inManagedObjectContext:self.managedObjectContext];
+                        [position setValue:[spanNode getAttributeNamed:@"value"] forKey:@"number"];
+                        [position setValue:parsedString forKey:@"name"];
+                        if (![self.managedObjectContext save:&error]) {
+                            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                        }
+                        [self downloadLocationWithString:parsedString andHandler:^(NSMutableDictionary *result) {
+                            [position setValue:[diciotnary objectForKey:@"latitude"] forKey:@"latitude"];
+                            [position setValue:[diciotnary objectForKey:@"longitude"] forKey:@"longitude"];
+                            if (![self.managedObjectContext save:&error]) {
+                                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                            }
+                        }];
+                    }
                 }
             }
         }
@@ -136,8 +165,6 @@
         
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        appDelegate.lastDataDownloaded = responseString;
         NSLog(@"res %@", responseString);
         NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
@@ -246,31 +273,27 @@
             return;
         }
         NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
-        
-        if(![responseString isEqualToString:appDelegate.lastDataDownloaded]) {
-            appDelegate.lastDataDownloaded = responseString;
-            HTMLNode *bodyNode = [parser body];
-            NSArray *selectNode = [bodyNode findChildTags:@"tr"];
-            //[self removeDataFromDatabase];
-            for(int j = 0; j < selectNode.count; j++) {
-                if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
-                    NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
-                    NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
-                    NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
-                    NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
-                    
-                    NSManagedObject *position = [NSEntityDescription
-                                                 insertNewObjectForEntityForName:@"Position"
-                                                 inManagedObjectContext:self.managedObjectContext];
-                    NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
-                    [position setValue:url forKey:@"mainURL"];
-                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
-                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
-                    [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
-                    
-                    if (![self.managedObjectContext save:&error]) {
-                        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-                    }
+        HTMLNode *bodyNode = [parser body];
+        NSArray *selectNode = [bodyNode findChildTags:@"tr"];
+        //[self removeDataFromDatabase];
+        for(int j = 0; j < selectNode.count; j++) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
+                NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
+                NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
+                NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
+                NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
+                
+                NSManagedObject *position = [NSEntityDescription
+                                             insertNewObjectForEntityForName:@"Position"
+                                             inManagedObjectContext:self.managedObjectContext];
+                NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                [position setValue:url forKey:@"mainURL"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
+                [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
+                
+                if (![self.managedObjectContext save:&error]) {
+                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                 }
             }
         }
@@ -280,6 +303,26 @@
         NSLog(@"Error: %@", error);
     }];
     [operation start];
+}
+
+- (void)downloadLocationWithString:(NSString *)locationName andHandler:(void(^)(NSMutableDictionary *result))handler {
+//    locationName = [NSString encodeURL:locationName];
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder geocodeAddressString:locationName completionHandler:^(NSArray *placemarks, NSError *error) {
+        //Error checking
+        
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];
+        NSLog(@"%f", placemark.region.center.latitude);
+        NSLog(@"%f", placemark.region.center.longitude);
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]
+                                           initWithObjects:
+                                            @[[NSNumber numberWithFloat:placemark.region.center.latitude],
+                                                [NSNumber numberWithFloat:placemark.region.center.longitude]]
+                                           forKeys:
+                                            @[@"latitude",
+                                                @"longitude"]];
+        handler(dictionary);
+    }];
 }
 
 - (void)cancelAllOperations {

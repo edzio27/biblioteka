@@ -23,7 +23,6 @@
 		DB0259071753EB76006F604E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0259061753EB76006F604E /* CoreData.framework */; };
 		DB02590B1753EF54006F604E /* ParseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0259091753EF54006F604E /* ParseViewController.m */; };
 		DB02590C1753EF54006F604E /* ParseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB02590A1753EF54006F604E /* ParseViewController.xib */; };
-		DB0259121753F260006F604E /* Shop.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0259111753F260006F604E /* Shop.m */; };
 		DB0259271753F4BD006F604E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0259151753F4BD006F604E /* AFHTTPClient.m */; };
 		DB0259281753F4BD006F604E /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0259171753F4BD006F604E /* AFHTTPRequestOperation.m */; };
 		DB0259291753F4BD006F604E /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0259191753F4BD006F604E /* AFImageRequestOperation.m */; };
@@ -49,9 +48,14 @@
 		DB17F0E81760E8E400F35AB7 /* navigationbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0E61760E8E400F35AB7 /* navigationbar.png */; };
 		DB17F0E91760E8E400F35AB7 /* navigationbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0E71760E8E400F35AB7 /* navigationbar@2x.png */; };
 		DB17F0ED1763178400F35AB7 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */; };
+		DB17F0F0176381EB00F35AB7 /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0EF176381EB00F35AB7 /* Library.m */; };
+		DB17F0F21766671C00F35AB7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB17F0F11766671C00F35AB7 /* CoreLocation.framework */; };
+		DB17F0F617666B9200F35AB7 /* MapViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0F417666B9100F35AB7 /* MapViewViewController.m */; };
+		DB17F0F717666B9200F35AB7 /* MapViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0F517666B9100F35AB7 /* MapViewViewController.xib */; };
+		DB17F0FB17666E9B00F35AB7 /* MyLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0FA17666E9B00F35AB7 /* MyLocation.m */; };
+		DB17F0FD1766729600F35AB7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB17F0FC1766729600F35AB7 /* MapKit.framework */; };
 		DB19B98E1759335B00801744 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = DB19B98D1759335B00801744 /* logo.png */; };
 		DB19B9901759349600801744 /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB19B98F1759349600801744 /* logo@2x.png */; };
-		DB19B99617593FB500801744 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19B99517593FB500801744 /* Product.m */; };
 		DB19B9A2175BDB1900801744 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19B99F175BDB1900801744 /* HTMLNode.m */; };
 		DB19B9A3175BDB1900801744 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = DB19B9A1175BDB1900801744 /* HTMLParser.m */; };
 		DB19B9A5175BDC4900801744 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DB19B9A4175BDC4900801744 /* libxml2.dylib */; };
@@ -93,8 +97,6 @@
 		DB0259081753EF54006F604E /* ParseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseViewController.h; sourceTree = "<group>"; };
 		DB0259091753EF54006F604E /* ParseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseViewController.m; sourceTree = "<group>"; };
 		DB02590A1753EF54006F604E /* ParseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParseViewController.xib; sourceTree = "<group>"; };
-		DB0259101753F260006F604E /* Shop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shop.h; sourceTree = "<group>"; };
-		DB0259111753F260006F604E /* Shop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shop.m; sourceTree = "<group>"; };
 		DB0259141753F4BD006F604E /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
 		DB0259151753F4BD006F604E /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
 		DB0259161753F4BD006F604E /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -134,10 +136,17 @@
 		DB17F0E71760E8E400F35AB7 /* navigationbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar@2x.png"; sourceTree = "<group>"; };
 		DB17F0EB1763178400F35AB7 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		DB17F0EE176381EB00F35AB7 /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Library.h; sourceTree = "<group>"; };
+		DB17F0EF176381EB00F35AB7 /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Library.m; sourceTree = "<group>"; };
+		DB17F0F11766671C00F35AB7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		DB17F0F317666B9100F35AB7 /* MapViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewViewController.h; sourceTree = "<group>"; };
+		DB17F0F417666B9100F35AB7 /* MapViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewViewController.m; sourceTree = "<group>"; };
+		DB17F0F517666B9100F35AB7 /* MapViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewViewController.xib; sourceTree = "<group>"; };
+		DB17F0F917666E9B00F35AB7 /* MyLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLocation.h; sourceTree = "<group>"; };
+		DB17F0FA17666E9B00F35AB7 /* MyLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLocation.m; sourceTree = "<group>"; };
+		DB17F0FC1766729600F35AB7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		DB19B98D1759335B00801744 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		DB19B98F1759349600801744 /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
-		DB19B99417593FB500801744 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
-		DB19B99517593FB500801744 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		DB19B99E175BDB1900801744 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
 		DB19B99F175BDB1900801744 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
 		DB19B9A0175BDB1900801744 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
@@ -171,6 +180,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB17F0FD1766729600F35AB7 /* MapKit.framework in Frameworks */,
+				DB17F0F21766671C00F35AB7 /* CoreLocation.framework in Frameworks */,
 				DB19B9A5175BDC4900801744 /* libxml2.dylib in Frameworks */,
 				DB0643921758B5F800C16099 /* SystemConfiguration.framework in Frameworks */,
 				DB0635D11758B0A300C16099 /* MessageUI.framework in Frameworks */,
@@ -188,6 +199,8 @@
 		DB0258CD1753DBDC006F604E = {
 			isa = PBXGroup;
 			children = (
+				DB17F0FC1766729600F35AB7 /* MapKit.framework */,
+				DB17F0F11766671C00F35AB7 /* CoreLocation.framework */,
 				DB19B9A4175BDC4900801744 /* libxml2.dylib */,
 				DB0643911758B5F800C16099 /* SystemConfiguration.framework */,
 				DB0635D01758B0A300C16099 /* MessageUI.framework */,
@@ -250,6 +263,7 @@
 		DB0258FC1753E8B7006F604E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				DB17F0F817666E9B00F35AB7 /* Location */,
 				DB17F0EA1763176900F35AB7 /* EncodeString */,
 				DB19B99D175BDB1900801744 /* HTMLParser */,
 				DB19B997175BD38C00801744 /* Libraries */,
@@ -286,10 +300,8 @@
 		DB0259051753E920006F604E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				DB0259101753F260006F604E /* Shop.h */,
-				DB0259111753F260006F604E /* Shop.m */,
-				DB19B99417593FB500801744 /* Product.h */,
-				DB19B99517593FB500801744 /* Product.m */,
+				DB17F0EE176381EB00F35AB7 /* Library.h */,
+				DB17F0EF176381EB00F35AB7 /* Library.m */,
 				DB9F52F6175D23B700FC323E /* Position.h */,
 				DB9F52F7175D23B700FC323E /* Position.m */,
 				DB0259011753E901006F604E /* CoreDataModel.xcdatamodeld */,
@@ -341,6 +353,9 @@
 				DB9F52F9175D244100FC323E /* PositionResultViewController.h */,
 				DB9F52FA175D244100FC323E /* PositionResultViewController.m */,
 				DB9F52FB175D244100FC323E /* PositionResultViewController.xib */,
+				DB17F0F317666B9100F35AB7 /* MapViewViewController.h */,
+				DB17F0F417666B9100F35AB7 /* MapViewViewController.m */,
+				DB17F0F517666B9100F35AB7 /* MapViewViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -387,6 +402,15 @@
 				DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */,
 			);
 			path = EncodeString;
+			sourceTree = "<group>";
+		};
+		DB17F0F817666E9B00F35AB7 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				DB17F0F917666E9B00F35AB7 /* MyLocation.h */,
+				DB17F0FA17666E9B00F35AB7 /* MyLocation.m */,
+			);
+			path = Location;
 			sourceTree = "<group>";
 		};
 		DB19B997175BD38C00801744 /* Libraries */ = {
@@ -500,6 +524,7 @@
 				DB9F52FD175D244100FC323E /* PositionResultViewController.xib in Resources */,
 				DB17F0E81760E8E400F35AB7 /* navigationbar.png in Resources */,
 				DB17F0E91760E8E400F35AB7 /* navigationbar@2x.png in Resources */,
+				DB17F0F717666B9200F35AB7 /* MapViewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,7 +541,6 @@
 				DB0259001753E8B7006F604E /* JSONKit.m in Sources */,
 				DB0259031753E901006F604E /* CoreDataModel.xcdatamodeld in Sources */,
 				DB02590B1753EF54006F604E /* ParseViewController.m in Sources */,
-				DB0259121753F260006F604E /* Shop.m in Sources */,
 				DB0259271753F4BD006F604E /* AFHTTPClient.m in Sources */,
 				DB0259281753F4BD006F604E /* AFHTTPRequestOperation.m in Sources */,
 				DB0259291753F4BD006F604E /* AFImageRequestOperation.m in Sources */,
@@ -533,7 +557,6 @@
 				DB35C1C21755D32100F66EA1 /* TMMemoryCache.m in Sources */,
 				DB0635CC175812CF00C16099 /* ProductsFromShopViewController.m in Sources */,
 				DB0643901758B41E00C16099 /* Reachability.m in Sources */,
-				DB19B99617593FB500801744 /* Product.m in Sources */,
 				DB19B9A2175BDB1900801744 /* HTMLNode.m in Sources */,
 				DB19B9A3175BDB1900801744 /* HTMLParser.m in Sources */,
 				DB19B9A9175BEEB400801744 /* LibrariesViewController.m in Sources */,
@@ -542,6 +565,9 @@
 				DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */,
 				DB9F5300175D30E300FC323E /* PositionDetail.m in Sources */,
 				DB17F0ED1763178400F35AB7 /* NSString+URLEncoding.m in Sources */,
+				DB17F0F0176381EB00F35AB7 /* Library.m in Sources */,
+				DB17F0F617666B9200F35AB7 /* MapViewViewController.m in Sources */,
+				DB17F0FB17666E9B00F35AB7 /* MyLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,16 +11,30 @@
 #import <CoreData/CoreData.h>
 #import "PositionDetail.h"
 #import "ProductCell.h"
+#import "MapViewViewController.h"
 
 @interface PositionResultViewController ()
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSMutableArray *positionList;
+@property (nonatomic, strong) UIBarButtonItem *barButtonItem;
 
 @end
 
 @implementation PositionResultViewController
+
+- (UIBarButtonItem *)barButtonItem {
+    if(_barButtonItem == nil) {
+        _barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showMap)];
+    }
+    return _barButtonItem;
+}
+
+- (void)showMap {
+    MapViewViewController *map = [[MapViewViewController alloc] init];
+    [self.navigationController pushViewController:map animated:YES];
+}
 
 - (NSManagedObjectContext *)managedObjectContext {
     if(_managedObjectContext == nil) {
@@ -117,6 +131,8 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
+    [self performSelector:@selector(showMap) withObject:self afterDelay:3.0];
+    self.navigationController.navigationItem.rightBarButtonItem = self.barButtonItem;
     // Do any additional setup after loading the view from its nib.
 }
 
