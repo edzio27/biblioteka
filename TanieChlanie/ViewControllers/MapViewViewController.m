@@ -47,6 +47,12 @@
                                        entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
         [fetchRequest setEntity:entity];
         _listLibrary = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
+        
+        Library *l = [_listLibrary objectAtIndex:5];
+        NSLog(@"%@", l.longitude);
+        NSLog(@"%@", l.number);
+        NSLog(@"%@", l.longitude);
+        
     }
     return _listLibrary;
 }
@@ -63,7 +69,9 @@
 - (void)showAllPins {
     for(int i = 0; i < self.listLibrary.count; i++) {
         Library *library = [self.listLibrary objectAtIndex:i];
-        MyLocation *pin = [[MyLocation alloc] initWithName:@"sima" address:@"eloelo" coordinate:CLLocationCoordinate2DMake([library.latitude doubleValue], [library.longitude doubleValue]) identifier:[NSNumber numberWithFloat:2]];
+        NSLog(@"%@", library.latitude);
+        NSLog(@"%@", library.longitude);
+        MyLocation *pin = [[MyLocation alloc] initWithName:[NSString stringWithFormat:@"Filia %@", library.number] address:@"eloelo" coordinate:CLLocationCoordinate2DMake([library.latitude doubleValue], [library.longitude doubleValue]) identifier:[NSNumber numberWithFloat:2]];
         [self.mapView addAnnotation:pin];
     }
 }
@@ -80,6 +88,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation{
+    NSLog(@"inside viewAnnotation");
+    static NSString *parkingAnnotationIdentifier=@"ParkingAnnotationIdentifier";
+    
+    if([annotation isKindOfClass:[MyLocation class]]){
+        MKPinAnnotationView* customPinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:parkingAnnotationIdentifier] ;
+        customPinView.pinColor = MKPinAnnotationColorRed;
+        customPinView.animatesDrop = YES;
+        customPinView.canShowCallout = YES;
+        
+        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        rightButton.tag = [((MyLocation *)annotation).identifier integerValue];
+        [rightButton addTarget:self action:@selector(showGallery:) forControlEvents:UIControlEventTouchUpInside];
+        customPinView.rightCalloutAccessoryView = rightButton;
+        return customPinView;
+    }
+    return nil;
 }
 
 @end

@@ -136,8 +136,9 @@
                             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                         }
                         [self downloadLocationWithString:parsedString andHandler:^(NSMutableDictionary *result) {
-                            [position setValue:[diciotnary objectForKey:@"latitude"] forKey:@"latitude"];
-                            [position setValue:[diciotnary objectForKey:@"longitude"] forKey:@"longitude"];
+                            NSLog(@"%@", result);
+                            [position setValue:[result objectForKey:@"latitude"] forKey:@"latitude"];
+                            [position setValue:[result objectForKey:@"longitude"] forKey:@"longitude"];
                             if (![self.managedObjectContext save:&error]) {
                                 NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                             }
@@ -321,6 +322,7 @@
                                            forKeys:
                                             @[@"latitude",
                                                 @"longitude"]];
+        NSLog(@"%@", dictionary);
         handler(dictionary);
     }];
 }
