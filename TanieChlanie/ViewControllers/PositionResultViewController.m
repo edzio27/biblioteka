@@ -12,6 +12,7 @@
 #import "PositionDetail.h"
 #import "ProductCell.h"
 #import "MapViewViewController.h"
+#import "Library.h"
 
 @interface PositionResultViewController ()
 
@@ -26,13 +27,44 @@
 
 - (UIBarButtonItem *)barButtonItem {
     if(_barButtonItem == nil) {
-        _barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showMap)];
+        UIButton *a1 = [UIButton buttonWithType:UIButtonTypeCustom];
+        [a1 setFrame:CGRectMake(0.0f, 0.0f, 25.0f, 25.0f)];
+        [a1 addTarget:self action:@selector(showMap) forControlEvents:UIControlEventTouchUpInside];
+        [a1 setImage:[UIImage imageNamed:@"no-image-blog-one"] forState:UIControlStateNormal];
+        _barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:a1];
     }
     return _barButtonItem;
 }
 
 - (void)showMap {
+    NSMutableArray *listLibrary = [[NSMutableArray alloc] init];
+    NSError *error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    listLibrary = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
+    
+    NSMutableArray *positionDetailArray = [[NSMutableArray alloc] init];
+    NSMutableArray *libraryDetailArray = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < self.positionList.count; i++) {
+        PositionDetail *position = [self.positionList objectAtIndex:i];
+        
+        NSString *libraryNumber = [[position.library componentsSeparatedByString:@" "] objectAtIndex:0];
+        for(int j = 0; j < listLibrary.count; j++) {
+            Library *library = [listLibrary objectAtIndex:j];
+            if([libraryNumber isEqualToString:library.number]) {
+                [positionDetailArray addObject:position];
+                [libraryDetailArray addObject:library];
+                break;
+            }
+        }
+    }
+    
     MapViewViewController *map = [[MapViewViewController alloc] init];
+    map.positionDetailArray = positionDetailArray;
+    map.libraryDetailArray = libraryDetailArray;
     [self.navigationController pushViewController:map animated:YES];
 }
 
@@ -131,8 +163,7 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    [self performSelector:@selector(showMap) withObject:self afterDelay:3.0];
-    self.navigationController.navigationItem.rightBarButtonItem = self.barButtonItem;
+    self.navigationItem.rightBarButtonItem = self.barButtonItem;
     // Do any additional setup after loading the view from its nib.
 }
 

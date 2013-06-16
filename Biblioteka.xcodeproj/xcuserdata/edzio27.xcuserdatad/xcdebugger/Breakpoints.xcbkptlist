@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewControllers/PositionResultViewController.m"
-         timestampString = "392590891.238575"
+         timestampString = "393066381.687158"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "135"
-         endingLineNumber = "135"
+         startingLineNumber = "166"
+         endingLineNumber = "166"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,51 +86,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewControllers/MapViewViewController.m"
-         timestampString = "392660752.219183"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "69"
-         endingLineNumber = "69"
-         landmarkName = "-showAllPins"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/ViewControllers/PositionResultViewController.m"
-         timestampString = "392659637.290021"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "34"
-         endingLineNumber = "34"
-         landmarkName = "-showMap"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/ViewControllers/MapViewViewController.m"
-         timestampString = "392660752.219183"
+         timestampString = "393062850.168153"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "51"
          endingLineNumber = "51"
-         landmarkName = "-listLibrary"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/ViewControllers/MapViewViewController.m"
-         timestampString = "392660754.568751"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "49"
-         endingLineNumber = "49"
-         landmarkName = "-listLibrary"
+         landmarkName = "-showAllPins"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

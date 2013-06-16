@@ -48,7 +48,6 @@
 		DB17F0E81760E8E400F35AB7 /* navigationbar.png in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0E61760E8E400F35AB7 /* navigationbar.png */; };
 		DB17F0E91760E8E400F35AB7 /* navigationbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0E71760E8E400F35AB7 /* navigationbar@2x.png */; };
 		DB17F0ED1763178400F35AB7 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */; };
-		DB17F0F0176381EB00F35AB7 /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0EF176381EB00F35AB7 /* Library.m */; };
 		DB17F0F21766671C00F35AB7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB17F0F11766671C00F35AB7 /* CoreLocation.framework */; };
 		DB17F0F617666B9200F35AB7 /* MapViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB17F0F417666B9100F35AB7 /* MapViewViewController.m */; };
 		DB17F0F717666B9200F35AB7 /* MapViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB17F0F517666B9100F35AB7 /* MapViewViewController.xib */; };
@@ -67,6 +66,7 @@
 		DB35C1C01755D32100F66EA1 /* TMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1BB1755D32100F66EA1 /* TMCache.m */; };
 		DB35C1C11755D32100F66EA1 /* TMDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1BD1755D32100F66EA1 /* TMDiskCache.m */; };
 		DB35C1C21755D32100F66EA1 /* TMMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = DB35C1BF1755D32100F66EA1 /* TMMemoryCache.m */; };
+		DB4FBD9F176CCA6C0026BE29 /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4FBD9E176CCA6C0026BE29 /* Library.m */; };
 		DB9F52F8175D23B700FC323E /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52F7175D23B700FC323E /* Position.m */; };
 		DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52FA175D244100FC323E /* PositionResultViewController.m */; };
 		DB9F52FD175D244100FC323E /* PositionResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB9F52FB175D244100FC323E /* PositionResultViewController.xib */; };
@@ -136,8 +136,6 @@
 		DB17F0E71760E8E400F35AB7 /* navigationbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigationbar@2x.png"; sourceTree = "<group>"; };
 		DB17F0EB1763178400F35AB7 /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
 		DB17F0EC1763178400F35AB7 /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
-		DB17F0EE176381EB00F35AB7 /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Library.h; sourceTree = "<group>"; };
-		DB17F0EF176381EB00F35AB7 /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Library.m; sourceTree = "<group>"; };
 		DB17F0F11766671C00F35AB7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		DB17F0F317666B9100F35AB7 /* MapViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewViewController.h; sourceTree = "<group>"; };
 		DB17F0F417666B9100F35AB7 /* MapViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewViewController.m; sourceTree = "<group>"; };
@@ -166,6 +164,8 @@
 		DB35C1BD1755D32100F66EA1 /* TMDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMDiskCache.m; sourceTree = "<group>"; };
 		DB35C1BE1755D32100F66EA1 /* TMMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMMemoryCache.h; sourceTree = "<group>"; };
 		DB35C1BF1755D32100F66EA1 /* TMMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMemoryCache.m; sourceTree = "<group>"; };
+		DB4FBD9D176CCA6C0026BE29 /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Library.h; sourceTree = "<group>"; };
+		DB4FBD9E176CCA6C0026BE29 /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Library.m; sourceTree = "<group>"; };
 		DB9F52F6175D23B700FC323E /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
 		DB9F52F7175D23B700FC323E /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
 		DB9F52F9175D244100FC323E /* PositionResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionResultViewController.h; sourceTree = "<group>"; };
@@ -300,8 +300,8 @@
 		DB0259051753E920006F604E /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				DB17F0EE176381EB00F35AB7 /* Library.h */,
-				DB17F0EF176381EB00F35AB7 /* Library.m */,
+				DB4FBD9D176CCA6C0026BE29 /* Library.h */,
+				DB4FBD9E176CCA6C0026BE29 /* Library.m */,
 				DB9F52F6175D23B700FC323E /* Position.h */,
 				DB9F52F7175D23B700FC323E /* Position.m */,
 				DB0259011753E901006F604E /* CoreDataModel.xcdatamodeld */,
@@ -565,9 +565,9 @@
 				DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */,
 				DB9F5300175D30E300FC323E /* PositionDetail.m in Sources */,
 				DB17F0ED1763178400F35AB7 /* NSString+URLEncoding.m in Sources */,
-				DB17F0F0176381EB00F35AB7 /* Library.m in Sources */,
 				DB17F0F617666B9200F35AB7 /* MapViewViewController.m in Sources */,
 				DB17F0FB17666E9B00F35AB7 /* MyLocation.m in Sources */,
+				DB4FBD9F176CCA6C0026BE29 /* Library.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

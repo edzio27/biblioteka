@@ -13,4 +13,7 @@
 
 @property (nonatomic, strong) MKMapView *mapView;
 
+@property (nonatomic, strong) NSMutableArray *positionDetailArray;
+@property (nonatomic, strong) NSMutableArray *libraryDetailArray;
+
 @end

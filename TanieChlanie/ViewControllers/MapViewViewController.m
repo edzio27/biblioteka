@@ -11,6 +11,7 @@
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 #import "Library.h"
+#import "PositionDetail.h"
 
 @interface MapViewViewController ()
 
@@ -38,25 +39,6 @@
     return _mapView;
 }
 
-- (NSMutableArray *)listLibrary {
-    if(_listLibrary == nil) {
-        _listLibrary = [[NSMutableArray alloc] init];
-        NSError *error;
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription
-                                       entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
-        [fetchRequest setEntity:entity];
-        _listLibrary = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
-        
-        Library *l = [_listLibrary objectAtIndex:5];
-        NSLog(@"%@", l.longitude);
-        NSLog(@"%@", l.number);
-        NSLog(@"%@", l.longitude);
-        
-    }
-    return _listLibrary;
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -67,11 +49,16 @@
 }
 
 - (void)showAllPins {
-    for(int i = 0; i < self.listLibrary.count; i++) {
-        Library *library = [self.listLibrary objectAtIndex:i];
-        NSLog(@"%@", library.latitude);
-        NSLog(@"%@", library.longitude);
-        MyLocation *pin = [[MyLocation alloc] initWithName:[NSString stringWithFormat:@"Filia %@", library.number] address:@"eloelo" coordinate:CLLocationCoordinate2DMake([library.latitude doubleValue], [library.longitude doubleValue]) identifier:[NSNumber numberWithFloat:2]];
+    for(int i = 0; i < self.libraryDetailArray.count; i++) {
+        Library *library = [self.libraryDetailArray objectAtIndex:i];
+        PositionDetail *positionDetail = [self.positionDetailArray objectAtIndex:0];
+        NSString *status = nil;
+        if(positionDetail.termin == nil) {
+            status = [NSString stringWithFormat:@"Wolne"];
+        } else {
+            status = [NSString stringWithFormat:@"Wolne od: %@", positionDetail.termin];
+        }
+        MyLocation *pin = [[MyLocation alloc] initWithName:[NSString stringWithFormat:@"Filia %@", library.number] address:status coordinate:CLLocationCoordinate2DMake([library.latitude doubleValue], [library.longitude doubleValue]) identifier:[NSNumber numberWithFloat:2]];
         [self.mapView addAnnotation:pin];
     }
 }
@@ -100,10 +87,12 @@
         customPinView.animatesDrop = YES;
         customPinView.canShowCallout = YES;
         
+        /*
         UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         rightButton.tag = [((MyLocation *)annotation).identifier integerValue];
         [rightButton addTarget:self action:@selector(showGallery:) forControlEvents:UIControlEventTouchUpInside];
         customPinView.rightCalloutAccessoryView = rightButton;
+         */
         return customPinView;
     }
     return nil;
