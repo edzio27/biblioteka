@@ -19,14 +19,21 @@
         self.backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
         [self addSubview:self.backgroundView];
         
-        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 300, 55)];
+        self.rowNumber = [[UILabel alloc] initWithFrame:CGRectMake(3, 30, 30, 15)];
+        self.rowNumber.backgroundColor = [UIColor clearColor];
+        self.rowNumber.textColor = [UIColor colorWithRed:0.322 green:0.314 blue:0.345 alpha:1.0];
+        self.rowNumber.font = [UIFont boldSystemFontOfSize:17];
+        self.rowNumber.numberOfLines = 1;
+        [self addSubview:self.rowNumber];
+        
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 280, 63)];
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.textColor = [UIColor colorWithRed:0.322 green:0.314 blue:0.345 alpha:1.0];
-        self.titleLabel.font = [UIFont fontWithName:@"Curier-Bold" size:13];
+        self.titleLabel.font = [UIFont fontWithName:@"Curier-Bold" size:10];
         self.titleLabel.numberOfLines = 3;
         [self addSubview:self.titleLabel];
         
-        self.authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 50 , 260, 30)];
+        self.authorLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 53 , 260, 30)];
         self.authorLabel.backgroundColor = [UIColor clearColor];
         self.authorLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:14];
         self.authorLabel.textColor = RED_COLOR;

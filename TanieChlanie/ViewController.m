@@ -205,7 +205,7 @@
     /* custom imageview in bavigationbar */
     UIImage *image = [[UIImage imageNamed:@"navigationbar"] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 1, 1, 1)];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    self.title = @"Biblioteka";
+    self.title = @"MBP Wrocław";
 }
 
 - (void)didReceiveMemoryWarning

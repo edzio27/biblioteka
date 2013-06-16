@@ -28,9 +28,9 @@
 - (UIBarButtonItem *)barButtonItem {
     if(_barButtonItem == nil) {
         UIButton *a1 = [UIButton buttonWithType:UIButtonTypeCustom];
-        [a1 setFrame:CGRectMake(0.0f, 0.0f, 25.0f, 25.0f)];
+        [a1 setFrame:CGRectMake(0.0f, 0.0f, 35.0f, 35.0f)];
         [a1 addTarget:self action:@selector(showMap) forControlEvents:UIControlEventTouchUpInside];
-        [a1 setImage:[UIImage imageNamed:@"no-image-blog-one"] forState:UIControlStateNormal];
+        [a1 setImage:[UIImage imageNamed:@"mapIcon@2x.png"] forState:UIControlStateNormal];
         _barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:a1];
     }
     return _barButtonItem;
@@ -65,6 +65,39 @@
     MapViewViewController *map = [[MapViewViewController alloc] init];
     map.positionDetailArray = positionDetailArray;
     map.libraryDetailArray = libraryDetailArray;
+    [self.navigationController pushViewController:map animated:YES];
+}
+
+- (void)showMapWithIdentifier:(NSNumber *)identifier {
+    NSMutableArray *listLibrary = [[NSMutableArray alloc] init];
+    NSError *error;
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    listLibrary = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
+    
+    NSMutableArray *positionDetailArray = [[NSMutableArray alloc] init];
+    NSMutableArray *libraryDetailArray = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < self.positionList.count; i++) {
+        PositionDetail *position = [self.positionList objectAtIndex:i];
+        
+        NSString *libraryNumber = [[position.library componentsSeparatedByString:@" "] objectAtIndex:0];
+        for(int j = 0; j < listLibrary.count; j++) {
+            Library *library = [listLibrary objectAtIndex:j];
+            if([libraryNumber isEqualToString:library.number]) {
+                [positionDetailArray addObject:position];
+                [libraryDetailArray addObject:library];
+                break;
+            }
+        }
+    }
+    
+    MapViewViewController *map = [[MapViewViewController alloc] init];
+    map.positionDetailArray = positionDetailArray;
+    map.libraryDetailArray = libraryDetailArray;
+    map.selectedPinNumber = identifier;
     [self.navigationController pushViewController:map animated:YES];
 }
 
@@ -128,6 +161,7 @@
     
     PositionDetail *position = [self.positionList objectAtIndex:indexPath.row];
     
+    cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     cell.titleLabel.text = position.library;
     if(position.termin == nil) {
         cell.authorLabel.text = [NSString stringWithFormat:@"Wolne"];
@@ -143,7 +177,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    //[self showMapWithIdentifier:[NSNumber numberWithInt:indexPath.row]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -164,6 +198,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
     self.navigationItem.rightBarButtonItem = self.barButtonItem;
+    self.title = @"Dostępność";
     // Do any additional setup after loading the view from its nib.
 }
 

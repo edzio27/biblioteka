@@ -118,6 +118,7 @@
 {
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
+    self.title = @"Wybierz filie";
     // Do any additional setup after loading the view from its nib.
 }
 

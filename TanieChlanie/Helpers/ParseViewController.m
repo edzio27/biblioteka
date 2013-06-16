@@ -122,9 +122,16 @@
                     if(arrayAddress.count > 1) {
                         //NSString *parsedString = [[arrayAddress objectAtIndex:1] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
                         NSString *parsedString = [arrayAddress objectAtIndex:1];
-                        parsedString = [parsedString stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
-                        parsedString = [NSString stringWithFormat:@"%@ Wrocław", parsedString];
-                        NSLog(@"string %@", parsedString);
+                        
+                        /* check if string contain (ALEPH) sting */
+                        if ([parsedString rangeOfString:@"(ALEPH)"].location == NSNotFound) {
+                            parsedString = [NSString stringWithFormat:@"%@ Wrocław", parsedString];
+                            NSLog(@"string %@", parsedString);
+                        } else {
+                            parsedString = [parsedString stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
+                            parsedString = [NSString stringWithFormat:@"%@ Wrocław", parsedString];
+                            NSLog(@"string %@", parsedString);
+                        }
                         
                         /* save to core data base */
                         NSManagedObject *position = [NSEntityDescription
@@ -307,14 +314,10 @@
 }
 
 - (void)downloadLocationWithString:(NSString *)locationName andHandler:(void(^)(NSMutableDictionary *result))handler {
-//    locationName = [NSString encodeURL:locationName];
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:locationName completionHandler:^(NSArray *placemarks, NSError *error) {
-        //Error checking
         
         CLPlacemark *placemark = [placemarks objectAtIndex:0];
-        NSLog(@"%f", placemark.region.center.latitude);
-        NSLog(@"%f", placemark.region.center.longitude);
         NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]
                                            initWithObjects:
                                             @[[NSNumber numberWithFloat:placemark.region.center.latitude],
@@ -326,6 +329,49 @@
         handler(dictionary);
     }];
 }
+
+/*
+- (void)downloadLocationWithString:(NSString *)locationName andHandler:(void(^)(NSMutableDictionary *result))handler {
+    sleep(1);
+    NSString *stringName = [locationName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSMutableDictionary *parametersDictionary = [[NSMutableDictionary alloc] initWithObjects:@[stringName,
+                                                                                             @"true"]
+                                                                                    forKeys:@[@"address",
+                                                                                             @"sensor"]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:
+                                                                      [NSString stringWithFormat:
+                                                                       @"http://maps.googleapis.com/maps/api/geocode"]]];
+    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
+                                                            path:@"json"
+                                                      parameters:parametersDictionary];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError* error;
+        NSDictionary* json = [NSJSONSerialization
+                              JSONObjectWithData:responseObject
+                              options:kNilOptions 
+                              error:&error];
+        NSLog(@"%@", json);
+        NSNumber *latitude = [[[[[json objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lat"];
+        NSNumber *longitude = [[[[[json objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lng"];
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]
+                                           initWithObjects:
+                                           @[latitude,
+                                           longitude]
+                                           forKeys:
+                                           @[@"latitude",
+                                           @"longitude"]];
+        NSLog(@"%@", dictionary);
+        handler(dictionary);
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+    [operation start];
+}
+*/
 
 - (void)cancelAllOperations {
     [self.queue cancelAllOperations];

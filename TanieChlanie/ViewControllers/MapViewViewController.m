@@ -13,10 +13,14 @@
 #import "Library.h"
 #import "PositionDetail.h"
 
+#define CENTER_LATITUDE 51.107779
+#define CENTER_LONGITUDE 17.038583
+
 @interface MapViewViewController ()
 
 @property (nonatomic, strong) NSMutableArray *listLibrary;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSMutableArray *pinsArray;
 
 @end
 
@@ -49,16 +53,19 @@
 }
 
 - (void)showAllPins {
+    self.pinsArray = [[NSMutableArray alloc] init];
     for(int i = 0; i < self.libraryDetailArray.count; i++) {
         Library *library = [self.libraryDetailArray objectAtIndex:i];
-        PositionDetail *positionDetail = [self.positionDetailArray objectAtIndex:0];
+        PositionDetail *positionDetail = [self.positionDetailArray objectAtIndex:i];
         NSString *status = nil;
         if(positionDetail.termin == nil) {
             status = [NSString stringWithFormat:@"Wolne"];
         } else {
             status = [NSString stringWithFormat:@"Wolne od: %@", positionDetail.termin];
         }
+        
         MyLocation *pin = [[MyLocation alloc] initWithName:[NSString stringWithFormat:@"Filia %@", library.number] address:status coordinate:CLLocationCoordinate2DMake([library.latitude doubleValue], [library.longitude doubleValue]) identifier:[NSNumber numberWithFloat:2]];
+        [self.pinsArray addObject:pin];
         [self.mapView addAnnotation:pin];
     }
 }
@@ -66,11 +73,34 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view addSubview:self.mapView];
-    [self showAllPins];
+    self.title = @"Mapa dostępności";
     // Do any additional setup after loading the view from its nib.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.view addSubview:self.mapView];
+    [self showAllPins];
+    
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    region.center = CLLocationCoordinate2DMake(CENTER_LATITUDE, CENTER_LONGITUDE);
+    span.latitudeDelta = 0.05;
+    span.longitudeDelta = 0.05;
+    region.span = span;
+    [self.mapView setRegion:region animated:YES];
+}
+
+/*
+- (void)showSelectedPin {
+    if(self.selectedPinNumber) {
+        int selectedPin = [self.selectedPinNumber intValue];
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self mapView:self.mapView viewForAnnotation:[self.pinsArray objectAtIndex:selectedPin]];
+        NSLog(@"%@", annotationView);
+        [annotationView setSelected:YES animated:YES];
+    }
+}
+*/
+ 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -78,24 +108,20 @@
 }
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation{
-    NSLog(@"inside viewAnnotation");
     static NSString *parkingAnnotationIdentifier=@"ParkingAnnotationIdentifier";
     
     if([annotation isKindOfClass:[MyLocation class]]){
         MKPinAnnotationView* customPinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:parkingAnnotationIdentifier] ;
         customPinView.pinColor = MKPinAnnotationColorRed;
-        customPinView.animatesDrop = YES;
+        customPinView.animatesDrop = NO;
         customPinView.canShowCallout = YES;
-        
-        /*
-        UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        rightButton.tag = [((MyLocation *)annotation).identifier integerValue];
-        [rightButton addTarget:self action:@selector(showGallery:) forControlEvents:UIControlEventTouchUpInside];
-        customPinView.rightCalloutAccessoryView = rightButton;
-         */
         return customPinView;
     }
     return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    
 }
 
 @end

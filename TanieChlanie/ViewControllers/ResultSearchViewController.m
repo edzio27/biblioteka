@@ -113,6 +113,7 @@ static int searchValue;
     
     Position *position = [self.positionList objectAtIndex:indexPath.row];
     
+    cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     cell.titleLabel.text = position.title;
     cell.authorLabel.text = position.author;
     cell.dateLabel.text = position.year;
@@ -170,6 +171,7 @@ static int searchValue;
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.loadMoreButton];
     searchValue = 0;
+    self.title = @"Wyniki";
     // Do any additional setup after loading the view from its nib.
 }
 

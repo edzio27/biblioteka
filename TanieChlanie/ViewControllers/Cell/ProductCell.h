@@ -10,6 +10,7 @@
 
 @interface ProductCell : UITableViewCell
 
+@property (nonatomic, strong) UILabel *rowNumber;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *authorLabel;

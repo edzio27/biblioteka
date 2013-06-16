@@ -15,5 +15,6 @@
 
 @property (nonatomic, strong) NSMutableArray *positionDetailArray;
 @property (nonatomic, strong) NSMutableArray *libraryDetailArray;
+@property (nonatomic, strong) NSNumber *selectedPinNumber;
 
 @end
