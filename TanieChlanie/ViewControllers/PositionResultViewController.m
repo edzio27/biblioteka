@@ -13,6 +13,7 @@
 #import "ProductCell.h"
 #import "MapViewViewController.h"
 #import "Library.h"
+#import "UIImage+MapShot.h"
 
 @interface PositionResultViewController ()
 
@@ -20,10 +21,42 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSMutableArray *positionList;
 @property (nonatomic, strong) UIBarButtonItem *barButtonItem;
+@property (nonatomic, strong) NSMutableArray *libraryList;
 
 @end
 
 @implementation PositionResultViewController
+
+- (NSMutableArray *)libraryList {
+    if(_libraryList == nil) {
+        _libraryList = [[NSMutableArray alloc] init];
+        NSError *error;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription
+                                       entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        _libraryList = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
+        
+        NSMutableArray *positionDetailArray = [[NSMutableArray alloc] init];
+        NSMutableArray *libraryDetailArray = [[NSMutableArray alloc] init];
+        
+        for(int i = 0; i < self.positionList.count; i++) {
+            PositionDetail *position = [self.positionList objectAtIndex:i];
+            
+            NSString *libraryNumber = [[position.library componentsSeparatedByString:@" "] objectAtIndex:0];
+            for(int j = 0; j < _libraryList.count; j++) {
+                Library *library = [_libraryList objectAtIndex:j];
+                if([libraryNumber isEqualToString:library.number]) {
+                    [positionDetailArray addObject:position];
+                    [libraryDetailArray addObject:library];
+                    break;
+                }
+            }
+        }
+        _libraryList = libraryDetailArray;
+    }
+    return _libraryList;
+}
 
 - (UIBarButtonItem *)barButtonItem {
     if(_barButtonItem == nil) {
@@ -68,39 +101,6 @@
     [self.navigationController pushViewController:map animated:YES];
 }
 
-- (void)showMapWithIdentifier:(NSNumber *)identifier {
-    NSMutableArray *listLibrary = [[NSMutableArray alloc] init];
-    NSError *error;
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    listLibrary = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    
-    NSMutableArray *positionDetailArray = [[NSMutableArray alloc] init];
-    NSMutableArray *libraryDetailArray = [[NSMutableArray alloc] init];
-    
-    for(int i = 0; i < self.positionList.count; i++) {
-        PositionDetail *position = [self.positionList objectAtIndex:i];
-        
-        NSString *libraryNumber = [[position.library componentsSeparatedByString:@" "] objectAtIndex:0];
-        for(int j = 0; j < listLibrary.count; j++) {
-            Library *library = [listLibrary objectAtIndex:j];
-            if([libraryNumber isEqualToString:library.number]) {
-                [positionDetailArray addObject:position];
-                [libraryDetailArray addObject:library];
-                break;
-            }
-        }
-    }
-    
-    MapViewViewController *map = [[MapViewViewController alloc] init];
-    map.positionDetailArray = positionDetailArray;
-    map.libraryDetailArray = libraryDetailArray;
-    map.selectedPinNumber = identifier;
-    [self.navigationController pushViewController:map animated:YES];
-}
-
 - (NSManagedObjectContext *)managedObjectContext {
     if(_managedObjectContext == nil) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -132,6 +132,8 @@
                                           - self.navigationController.navigationBar.frame.size.height
                                           - [UIApplication sharedApplication].statusBarFrame.size.height - 30);
         _tableView = [[UITableView alloc] initWithFrame:rectTableView style:UITableViewStylePlain];
+        _tableView.showsHorizontalScrollIndicator = NO;
+        _tableView.showsVerticalScrollIndicator = NO;
         _tableView.delegate = self;
         _tableView.dataSource = self;
     }
@@ -162,22 +164,26 @@
     PositionDetail *position = [self.positionList objectAtIndex:indexPath.row];
     
     cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
-    cell.titleLabel.text = position.library;
+    cell.titleLabel.text = [position.library stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
     if(position.termin == nil) {
         cell.authorLabel.text = [NSString stringWithFormat:@"Wolne"];
     } else {
         cell.authorLabel.text = [NSString stringWithFormat:@"Wolne od: %@", position.termin];
     }
     cell.dateLabel.text = position.amount;
-    if(position.termin == NULL) {
-        //cell.textLabel.textColor = [UIColor greenColor];
-    }
+    cell.circleView.backgroundColor = RED_COLOR;
+    
+    Library *library = [self.libraryList objectAtIndex:indexPath.row];
+    __block UIImage *mapImage = nil;
+    dispatch_queue_t queue = dispatch_queue_create("download.map.view", NULL);
+        dispatch_async(queue, ^{
+            mapImage = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+            cell.mapImageView.image = mapImage;
+        });
+    });
     
     return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //[self showMapWithIdentifier:[NSNumber numberWithInt:indexPath.row]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

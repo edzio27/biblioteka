@@ -8,6 +8,7 @@
 
 #import "ProductCell.h"
 #import "AppDelegate.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation ProductCell
 
@@ -45,6 +46,17 @@
         self.dateLabel.textColor = RED_COLOR;
         self.dateLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:15];
         [self addSubview:self.dateLabel];
+        
+        /* add circle view to cell */
+        self.circleView = [[UIView alloc] initWithFrame:CGRectMake(237, 2, 76, 76)];
+        self.circleView.layer.cornerRadius = 38;
+        self.circleView.backgroundColor = [UIColor clearColor];
+        [self addSubview:self.circleView];
+        
+        self.mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(240, 5, 70, 70)];
+        self.mapImageView.layer.cornerRadius = 35;
+        self.mapImageView.layer.masksToBounds = YES;
+		[self addSubview:self.mapImageView];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }

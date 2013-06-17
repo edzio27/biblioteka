@@ -84,8 +84,8 @@
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     region.center = CLLocationCoordinate2DMake(CENTER_LATITUDE, CENTER_LONGITUDE);
-    span.latitudeDelta = 0.05;
-    span.longitudeDelta = 0.05;
+    span.latitudeDelta = 0.18;
+    span.longitudeDelta = 0.18;
     region.span = span;
     [self.mapView setRegion:region animated:YES];
 }

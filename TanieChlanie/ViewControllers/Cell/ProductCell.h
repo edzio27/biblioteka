@@ -15,5 +15,7 @@
 @property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) UIImageView *backgroundView;
+@property (nonatomic, strong) UIImageView *mapImageView;
+@property (nonatomic, strong) UIView *circleView;
 
 @end
