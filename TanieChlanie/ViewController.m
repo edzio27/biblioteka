@@ -137,8 +137,6 @@
         NSString *title = [NSString encodeURL:self.textField.text];
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
-        NSLog(@"%@", self.button2.titleLabel.text);
-        NSLog(@"%@", self.libraries);
         NSArray *array = [self.libraries allKeysForObject:self.button2.titleLabel.text];
         NSString *value = nil;
         if(array.count > 0) {

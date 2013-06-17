@@ -39,7 +39,6 @@
 		DB0635C51757D68900C16099 /* navigation.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0635C31757D68900C16099 /* navigation.png */; };
 		DB0635C61757D68900C16099 /* section.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0635C41757D68900C16099 /* section.png */; };
 		DB0635C81757F23300C16099 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0635C71757F23300C16099 /* back.png */; };
-		DB0635CC175812CF00C16099 /* ProductsFromShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB0635CA175812CF00C16099 /* ProductsFromShopViewController.m */; };
 		DB0635CD175812CF00C16099 /* ProductsFromShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB0635CB175812CF00C16099 /* ProductsFromShopViewController.xib */; };
 		DB0635CF1758A52F00C16099 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0635CE1758A52F00C16099 /* QuartzCore.framework */; };
 		DB0635D11758B0A300C16099 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB0635D01758B0A300C16099 /* MessageUI.framework */; };
@@ -126,8 +125,6 @@
 		DB0635C31757D68900C16099 /* navigation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation.png; sourceTree = "<group>"; };
 		DB0635C41757D68900C16099 /* section.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = section.png; sourceTree = "<group>"; };
 		DB0635C71757F23300C16099 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
-		DB0635C9175812CF00C16099 /* ProductsFromShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductsFromShopViewController.h; sourceTree = "<group>"; };
-		DB0635CA175812CF00C16099 /* ProductsFromShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductsFromShopViewController.m; sourceTree = "<group>"; };
 		DB0635CB175812CF00C16099 /* ProductsFromShopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductsFromShopViewController.xib; sourceTree = "<group>"; };
 		DB0635CE1758A52F00C16099 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DB0635D01758B0A300C16099 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -347,8 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				DB0259391755183D006F604E /* Cell */,
-				DB0635C9175812CF00C16099 /* ProductsFromShopViewController.h */,
-				DB0635CA175812CF00C16099 /* ProductsFromShopViewController.m */,
 				DB0635CB175812CF00C16099 /* ProductsFromShopViewController.xib */,
 				DB19B9A6175BEEB400801744 /* LibrariesViewController.h */,
 				DB19B9A7175BEEB400801744 /* LibrariesViewController.m */,
@@ -572,7 +567,6 @@
 				DB35C1C01755D32100F66EA1 /* TMCache.m in Sources */,
 				DB35C1C11755D32100F66EA1 /* TMDiskCache.m in Sources */,
 				DB35C1C21755D32100F66EA1 /* TMMemoryCache.m in Sources */,
-				DB0635CC175812CF00C16099 /* ProductsFromShopViewController.m in Sources */,
 				DB0643901758B41E00C16099 /* Reachability.m in Sources */,
 				DB19B9A2175BDB1900801744 /* HTMLNode.m in Sources */,
 				DB19B9A3175BDB1900801744 /* HTMLParser.m in Sources */,

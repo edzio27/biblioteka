@@ -8,12 +8,19 @@
 
 #import "LibrariesViewController.h"
 #import "ViewController.h"
+#import "ProductCell.h"
+#import "AppDelegate.h"
+#import <CoreData/CoreData.h>
+#import "Library.h"
+#import "UIImage+MapShot.h"
 
 @interface LibrariesViewController ()
 
 @property (nonatomic, strong) NSMutableArray *tagArray;
 @property (nonatomic, strong) NSMutableArray *titleArray;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *libraryList;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 
@@ -41,6 +48,27 @@
         _titleArray = [[NSMutableArray alloc] init];
     }
     return _titleArray;
+}
+
+- (NSMutableArray *)libraryList {
+    if(_libraryList == nil) {
+        _libraryList = [[NSMutableArray alloc] init];
+        NSError *error;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription
+                                       entityForName:@"Library" inManagedObjectContext:self.managedObjectContext];
+        [fetchRequest setEntity:entity];
+        _libraryList = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
+    }
+    return _libraryList;
+}
+
+- (NSManagedObjectContext *)managedObjectContext {
+    if(_managedObjectContext == nil) {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _managedObjectContext = appDelegate.managedObjectContext;
+    }
+    return _managedObjectContext;
 }
 
 - (UITableView *)tableView {
@@ -73,21 +101,33 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.titleArray.count;
+    return self.libraryList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *identifier = @"Identifier";
-    UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:identifier];
+    ProductCell *cell =  (ProductCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
 
     if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell = [[ProductCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    cell.textLabel.text = [self.titleArray objectAtIndex:indexPath.row];
+    cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
+    //cell.titleLabel.frame = CGRectMake(30, 0, 200, 63);
+    cell.titleLabel.text = [[self.titleArray objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
+    cell.circleView.backgroundColor = RED_COLOR;
     
+    Library *library = [self.libraryList objectAtIndex:indexPath.row];
+    __block UIImage *mapImage = nil;
+    dispatch_queue_t queue = dispatch_queue_create("download.map.view.library", NULL);
+    dispatch_async(queue, ^{
+        mapImage = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cell.mapImageView.image = mapImage;
+        });
+    });
     return cell;
 }
 
@@ -99,7 +139,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60.0f;
+    return 80.0f;
 }
 
 #pragma mark -

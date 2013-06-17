@@ -42,7 +42,6 @@
         
         for(int i = 0; i < self.positionList.count; i++) {
             PositionDetail *position = [self.positionList objectAtIndex:i];
-            
             NSString *libraryNumber = [[position.library componentsSeparatedByString:@" "] objectAtIndex:0];
             for(int j = 0; j < _libraryList.count; j++) {
                 Library *library = [_libraryList objectAtIndex:j];

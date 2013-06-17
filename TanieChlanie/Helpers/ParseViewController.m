@@ -100,7 +100,8 @@
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
-        NSLog(@"res %@", responseString);
+        
+        [self clearEntity:@"Library"];
         __block NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
         if (error) {
@@ -244,7 +245,7 @@
             [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"termin"];
             [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"library"];
             [position setValue:((HTMLNode *)[inputNodes objectAtIndex:5]).contents forKey:@"amount"];
-            
+                        
             if (![self.managedObjectContext save:&error]) {
                 NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
             }
@@ -325,7 +326,6 @@
                                            forKeys:
                                             @[@"latitude",
                                                 @"longitude"]];
-        NSLog(@"%@", dictionary);
         handler(dictionary);
     }];
 }
