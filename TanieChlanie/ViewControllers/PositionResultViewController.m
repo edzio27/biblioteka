@@ -166,9 +166,9 @@
     cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     cell.titleLabel.text = [position.library stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
     if(position.termin == nil) {
-        cell.authorLabel.text = [NSString stringWithFormat:@"Wolne"];
+        cell.authorLabel.text = [NSString stringWithFormat:@"Dostępne"];
     } else {
-        cell.authorLabel.text = [NSString stringWithFormat:@"Wolne od: %@", position.termin];
+        cell.authorLabel.text = [NSString stringWithFormat:@"Dostępne od: %@", position.termin];
     }
     cell.dateLabel.text = position.amount;
     cell.circleView.backgroundColor = RED_COLOR;
@@ -193,7 +193,6 @@
                                           });
                                       }
                                   }];
-    
     return cell;
 }
 

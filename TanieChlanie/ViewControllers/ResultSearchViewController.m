@@ -29,6 +29,16 @@ static int searchValue;
 
 @implementation ResultSearchViewController
 
+- (MBProgressHUD *)progressHUD {
+    if(_progressHUD == nil) {
+        _progressHUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:_progressHUD];
+        _progressHUD.delegate = self;
+        _progressHUD.labelText = @"Ładowanie...";
+    }
+    return _progressHUD;
+}
+
 - (UIButton *)loadMoreButton {
     if(_loadMoreButton == nil) {
         _loadMoreButton = [[UIButton alloc] initWithFrame:CGRectMake(10,
@@ -44,10 +54,14 @@ static int searchValue;
 }
 
 - (void)showMore {
+    [self.progressHUD show:YES];
     searchValue++;
     NSString *value = [NSString stringWithFormat:@"%d", 10*searchValue + 1];
     ParseViewController *parser = [[ParseViewController alloc] init];
     [parser downloadMoreResultsPart:value title:self.positionTitle andHandler:^(NSMutableDictionary *handler) {
+        [self.progressHUD hide:YES];
+        [self.progressHUD removeFromSuperview];
+        self.progressHUD = nil;
         self.positionList = nil;
         [self.tableView reloadData];
     }];

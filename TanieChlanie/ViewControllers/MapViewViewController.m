@@ -59,9 +59,9 @@
         PositionDetail *positionDetail = [self.positionDetailArray objectAtIndex:i];
         NSString *status = nil;
         if(positionDetail.termin == nil) {
-            status = [NSString stringWithFormat:@"Wolne"];
+            status = [NSString stringWithFormat:@"Dostępne"];
         } else {
-            status = [NSString stringWithFormat:@"Wolne od: %@", positionDetail.termin];
+            status = [NSString stringWithFormat:@"Dostępne od: %@", positionDetail.termin];
         }
         
         MyLocation *pin = [[MyLocation alloc] initWithName:[NSString stringWithFormat:@"Filia %@", library.number] address:status coordinate:CLLocationCoordinate2DMake([library.latitude doubleValue], [library.longitude doubleValue]) identifier:[NSNumber numberWithFloat:2]];

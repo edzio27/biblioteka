@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ResultSearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ResultSearchViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, MBProgressHUDDelegate>
 
 @property (nonatomic, strong) NSString *positionTitle;
 
