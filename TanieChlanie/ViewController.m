@@ -13,7 +13,7 @@
 #import "MBProgressHUD.h"
 #import "LibrariesViewController.h"
 #import "ResultSearchViewController.h"
-#import <QuartzCore/QuartzCore.h>
+#import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 #import "NSString+URLEncoding.h"
 
@@ -25,10 +25,32 @@
 @property (nonatomic, strong) IBOutlet UITextField *textField;
 @property (nonatomic, strong) NSMutableDictionary *libraries;
 @property (nonatomic, strong) UIView *titleView;
+@property (nonatomic, strong) NSMutableArray *libraryArray;
+//@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 
 @implementation ViewController
+
+/*
+- (NSManagedObjectContext *)managedObjectContext {
+    if(_managedObjectContext == nil) {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        _managedObjectContext = appDelegate.managedObjectContext;
+    }
+    return _managedObjectContext;
+}
+
+- (NSMutableArray *)libraryArray {
+    if(_libraryArray == nil) {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Library" inManagedObjectContext:self.managedObjectContext]];
+        NSError *error = nil;
+        _libraryArray = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
+    }
+    return _libraryArray;
+}
+*/
 
 - (UIView *)titleView {
     if(_titleView == nil) {
@@ -146,6 +168,13 @@
     return internetStatus != NotReachable ? YES : NO;
 }
 
+- (BOOL)librariesDownloaded {
+    if(self.libraries.count == 0) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)showAll {
     if([self isThereInternetConnection]) {
         [self.progressHUD show:YES];
@@ -159,16 +188,32 @@
         } else {
             value = @"MBP";
         }
-        [parse findSearchPathWithCookie:^(NSString *result) {
-            [parse downloadResultWithTitle:title library:value cookie:result andHandler:^(NSMutableDictionary *result) {
-                [self.progressHUD hide:YES];
-                [self.progressHUD removeFromSuperview];
-                self.progressHUD = nil;
-                ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
-                products.positionTitle = title;
-                [self.navigationController pushViewController:products animated:YES];
+        if(![self librariesDownloaded]) {
+            [parse downloadLibrariesWithTitle:title andHandler:^(NSMutableDictionary *result) {
+                [parse findSearchPathWithCookie:^(NSString *result) {
+                    [parse downloadResultWithTitle:title library:value cookie:result andHandler:^(NSMutableDictionary *result) {
+                        [self.progressHUD hide:YES];
+                        [self.progressHUD removeFromSuperview];
+                        self.progressHUD = nil;
+                        ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
+                        products.positionTitle = title;
+                        [self.navigationController pushViewController:products animated:YES];
+                    }];
+                }];
             }];
-        }];
+
+        } else {
+            [parse findSearchPathWithCookie:^(NSString *result) {
+                [parse downloadResultWithTitle:title library:value cookie:result andHandler:^(NSMutableDictionary *result) {
+                    [self.progressHUD hide:YES];
+                    [self.progressHUD removeFromSuperview];
+                    self.progressHUD = nil;
+                    ResultSearchViewController *products = [[ResultSearchViewController alloc] init];
+                    products.positionTitle = title;
+                    [self.navigationController pushViewController:products animated:YES];
+                }];
+            }];
+        }
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Błąd połączenia" message:@"Brak połączenia z siecią" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];
@@ -181,16 +226,26 @@
         NSString *title = @"piekara";
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
-        [parse downloadLibrariesWithTitle:title andHandler:^(NSMutableDictionary *result) {
+        if(![self librariesDownloaded]) {
+            [parse downloadLibrariesWithTitle:title andHandler:^(NSMutableDictionary *result) {
+                [self.progressHUD hide:YES];
+                [self.progressHUD removeFromSuperview];
+                self.progressHUD = nil;
+                LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
+                libraries.delegate = self;
+                self.libraries = result;
+                libraries.libraryDictionary = result;
+                [self.navigationController pushViewController:libraries animated:YES];
+            }];
+        } else {
             [self.progressHUD hide:YES];
             [self.progressHUD removeFromSuperview];
             self.progressHUD = nil;
             LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
             libraries.delegate = self;
-            self.libraries = result;
-            libraries.libraryDictionary = result;
+            libraries.libraryDictionary = self.libraries;
             [self.navigationController pushViewController:libraries animated:YES];
-        }];
+        }
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Błąd połączenia" message:@"Brak połączenia z siecią" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];

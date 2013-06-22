@@ -13,6 +13,7 @@
 #import <CoreData/CoreData.h>
 #import "Library.h"
 #import "UIImage+MapShot.h"
+#import "TMCache.h"
 
 @interface LibrariesViewController ()
 
@@ -120,14 +121,26 @@
     cell.circleView.backgroundColor = RED_COLOR;
     
     Library *library = [self.libraryList objectAtIndex:indexPath.row];
-    __block UIImage *mapImage = nil;
     dispatch_queue_t queue = dispatch_queue_create("download.map.view.library", NULL);
-    dispatch_async(queue, ^{
-        mapImage = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            cell.mapImageView.image = mapImage;
-        });
-    });
+    
+    [[TMCache sharedCache] objectForKey:library.name
+                                  block:^(TMCache *cache, NSString *key, id object) {
+                                      __block UIImage *image = (UIImage *)object;
+                                      if(image) {
+                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                              cell.mapImageView.image = image;
+                                          });
+                                      } else {
+                                          dispatch_async(queue, ^{
+                                              image = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
+                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                  cell.mapImageView.image = image;
+                                                  [[TMCache sharedCache] setObject:image forKey:library.name block:nil];
+                                                  [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                              });
+                                          });
+                                      }
+                                  }];
     return cell;
 }
 
