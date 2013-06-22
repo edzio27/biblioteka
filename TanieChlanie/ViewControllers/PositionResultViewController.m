@@ -178,7 +178,7 @@
         dispatch_async(queue, ^{
             mapImage = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
             dispatch_async(dispatch_get_main_queue(), ^{
-            cell.mapImageView.image = mapImage;
+                cell.mapImageView.image = mapImage;
         });
     });
     

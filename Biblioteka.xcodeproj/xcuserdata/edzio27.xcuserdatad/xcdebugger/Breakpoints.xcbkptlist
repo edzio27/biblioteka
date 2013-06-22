@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewController.m"
-         timestampString = "392370671.060198"
+         timestampString = "393284488.91819"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "71"
-         endingLineNumber = "71"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
          landmarkName = "-mailComposeController:didFinishWithResult:error:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/ViewController.m"
-         timestampString = "393186025.698221"
+         timestampString = "393284488.91819"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "215"
-         endingLineNumber = "215"
+         startingLineNumber = "231"
+         endingLineNumber = "231"
          landmarkName = "-hideIndicator"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "393186830.022651"
+         timestampString = "393582288.26736"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "370"
-         endingLineNumber = "370"
+         startingLineNumber = "383"
+         endingLineNumber = "383"
          landmarkName = "@implementation ParseViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -47,38 +47,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "393186903.334893"
+         timestampString = "393582482.758345"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "158"
-         endingLineNumber = "158"
+         startingLineNumber = "166"
+         endingLineNumber = "166"
          landmarkName = "-downloadLibrariesWithTitle:andHandler:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/Helpers/Image/UIImage+MapShot.m"
-         timestampString = "393187055.725322"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "14"
-         endingLineNumber = "14"
-         landmarkName = "+getImageMapWithLatitude:andLongitude:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/ViewControllers/LibrariesViewController.m"
-         timestampString = "393187099.799111"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "126"
-         endingLineNumber = "126"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

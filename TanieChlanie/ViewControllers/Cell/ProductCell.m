@@ -49,12 +49,12 @@
         
         /* add circle view to cell */
         self.circleView = [[UIView alloc] initWithFrame:CGRectMake(237, 2, 76, 76)];
-        self.circleView.layer.cornerRadius = 38;
+        //self.circleView.layer.cornerRadius = 38;
         self.circleView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.circleView];
         
         self.mapImageView = [[UIImageView alloc] initWithFrame:CGRectMake(240, 5, 70, 70)];
-        self.mapImageView.layer.cornerRadius = 35;
+        //self.mapImageView.layer.cornerRadius = 35;
         self.mapImageView.layer.masksToBounds = YES;
 		[self addSubview:self.mapImageView];
         

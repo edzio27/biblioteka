@@ -24,10 +24,25 @@
 @property (nonatomic, strong) MBProgressHUD *progressHUD;
 @property (nonatomic, strong) IBOutlet UITextField *textField;
 @property (nonatomic, strong) NSMutableDictionary *libraries;
+@property (nonatomic, strong) UIView *titleView;
 
 @end
 
 @implementation ViewController
+
+- (UIView *)titleView {
+    if(_titleView == nil) {
+        _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
+        titleLabel.text = @"MBP Wrocław";
+        titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        titleLabel.backgroundColor = [UIColor clearColor];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        [_titleView addSubview:titleLabel];
+    }
+    return _titleView;
+}
 
 - (NSMutableDictionary *)libraries {
     if(_libraries == nil) {
@@ -200,10 +215,11 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.titleView = self.titleView;
     /* custom imageview in bavigationbar */
     UIImage *image = [[UIImage imageNamed:@"navigationbar"] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 1, 1, 1)];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    self.title = @"MBP Wrocław";
+    [[UIBarButtonItem appearance] setTintColor:RED_COLOR];
 }
 
 - (void)didReceiveMemoryWarning

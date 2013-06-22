@@ -115,7 +115,7 @@
     }
     
     cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
-    //cell.titleLabel.frame = CGRectMake(30, 0, 200, 63);
+    cell.titleLabel.frame = CGRectMake(30, 0, 200, 63);
     cell.titleLabel.text = [[self.titleArray objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
     cell.circleView.backgroundColor = RED_COLOR;
     

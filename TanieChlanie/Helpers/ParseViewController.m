@@ -21,10 +21,20 @@
 
 @property (nonatomic, strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, strong) NSOperationQueue *queue;
+@property (nonatomic, strong) NSOperationQueue *operationQueue;
+@property (nonatomic) int finished;
 
 @end
 
 @implementation ParseViewController
+
+- (NSOperationQueue *) operationQueue {
+    if(_operationQueue == nil) {
+        _operationQueue = [[NSOperationQueue alloc] init];
+        [_operationQueue setMaxConcurrentOperationCount:100];
+    }
+    return _operationQueue;
+}
 
 - (void)hideIndicator {
     NSLog(@"hide");
@@ -91,6 +101,7 @@
 
 
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
+    self.finished = 0;
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN-24432?func=find-b&request=%@&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
@@ -108,11 +119,10 @@
             NSLog(@"Error: %@", error);
             return;
         }
-        
         NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
         HTMLNode *bodyNode = [parser body];
         NSArray *selectNode = [bodyNode findChildTags:@"select"];
-        for(int j = 0; j < selectNode.count; j++) {
+            for(int j = 0; j < selectNode.count; j++) {
             if([[[selectNode objectAtIndex:j] getAttributeNamed:@"name"] isEqualToString:@"local_base"]) {
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"option"];
                 for (HTMLNode *spanNode in inputNodes) {
@@ -143,20 +153,23 @@
                         if (![self.managedObjectContext save:&error]) {
                             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                         }
+                        self.finished++;
                         [self downloadLocationWithString:parsedString andHandler:^(NSMutableDictionary *result) {
-                            NSLog(@"%@", result);
+                            NSError *error;
                             [position setValue:[result objectForKey:@"latitude"] forKey:@"latitude"];
                             [position setValue:[result objectForKey:@"longitude"] forKey:@"longitude"];
                             if (![self.managedObjectContext save:&error]) {
                                 NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                             }
+                         self.finished--;
+                         if(self.finished == 0) {
+                             handler(diciotnary);
+                         }
                         }];
                     }
                 }
             }
         }
-        handler(diciotnary);
-
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
@@ -284,7 +297,6 @@
         NSMutableDictionary *diciotnary = [[NSMutableDictionary alloc] init];
         HTMLNode *bodyNode = [parser body];
         NSArray *selectNode = [bodyNode findChildTags:@"tr"];
-        //[self removeDataFromDatabase];
         for(int j = 0; j < selectNode.count; j++) {
             if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
                 NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
@@ -326,6 +338,7 @@
                                            forKeys:
                                             @[@"latitude",
                                                 @"longitude"]];
+        NSLog(@"");
         handler(dictionary);
     }];
 }
