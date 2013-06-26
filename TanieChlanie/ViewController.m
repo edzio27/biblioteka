@@ -254,12 +254,21 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.button1];
-    [self.view addSubview:self.button2];
+    [self.scrollView addSubview:self.button1];
+    [self.scrollView addSubview:self.button2];
     
     [self.textField.layer setCornerRadius:0.0f];
     self.textField.layer.masksToBounds = YES;
     [self.textField setBackgroundColor:GRAY_COLOR];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidAppear:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidDisappear:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:self.view.window];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -281,6 +290,34 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark keyboard
+
+- (void)keyboardDidAppear:(NSNotification *)notification {
+    NSDictionary* keyboardInfo = [notification userInfo];
+    NSValue* keyboardFrameBegin = [keyboardInfo valueForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
+    
+    CGRect rectTableView = CGRectMake(0,
+                                      0,
+                                      [[UIScreen mainScreen] bounds].size.width,
+                                      [[UIScreen mainScreen] bounds].size.height
+                                      - self.navigationController.navigationBar.frame.size.height
+                                      - [UIApplication sharedApplication].statusBarFrame.size.height
+                                      - keyboardFrameBeginRect.size.height);
+    self.scrollView.frame = rectTableView;
+}
+
+- (void)keyboardDidDisappear:(NSNotification *)notification {
+    CGRect rectTableView = CGRectMake(0,
+                                      0,
+                                      [[UIScreen mainScreen] bounds].size.width,
+                                      [[UIScreen mainScreen] bounds].size.height
+                                      - self.navigationController.navigationBar.frame.size.height
+                                      - [UIApplication sharedApplication].statusBarFrame.size.height);
+    self.scrollView.frame = rectTableView;
 }
 
 - (void)hideIndicator {

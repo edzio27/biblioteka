@@ -16,5 +16,6 @@
 
 @property (nonatomic, strong) UIButton *button1;
 @property (nonatomic, strong) UIButton *button2;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
 @end

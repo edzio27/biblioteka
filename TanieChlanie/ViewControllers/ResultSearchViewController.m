@@ -141,19 +141,34 @@ static int searchValue;
     return cell;
 }
 
+- (BOOL)validURL:(NSString *)urlString {
+    if([NSURL URLWithString:urlString] != nil) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%@", ((Position *)[self.positionList objectAtIndex:indexPath.row]).mainURL);
     if([self isThereInternetConnection]) {
         [self.progressHUD show:YES];
         NSString *url = ((Position *)[self.positionList objectAtIndex:indexPath.row]).mainURL;
         ParseViewController *parse = [[ParseViewController alloc] init];
-        [parse downloadDetailPositionWithURL:url andHandler:^(NSMutableDictionary *result) {
+        if([self validURL:url]) {
+            [parse downloadDetailPositionWithURL:url andHandler:^(NSMutableDictionary *result) {
+                [self.progressHUD hide:YES];
+                [self.progressHUD removeFromSuperview];
+                self.progressHUD = nil;
+                PositionResultViewController *position = [[PositionResultViewController alloc] init];
+                [self.navigationController pushViewController:position animated:YES];
+            }];
+        } else {
             [self.progressHUD hide:YES];
             [self.progressHUD removeFromSuperview];
             self.progressHUD = nil;
-            PositionResultViewController *position = [[PositionResultViewController alloc] init];
-            [self.navigationController pushViewController:position animated:YES];
-        }];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Błąd" message:@"Zły adress url" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alertView show];
+        }
     } else {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Błąd połączenia" message:@"Brak połączenia z siecią" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alertView show];

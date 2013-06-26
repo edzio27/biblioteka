@@ -203,12 +203,14 @@
             if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
                 NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
-                NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
                 
                 NSManagedObject *position = [NSEntityDescription
                                                       insertNewObjectForEntityForName:@"Position"
                                                       inManagedObjectContext:self.managedObjectContext];
-                NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                NSString *url = nil;
+                if([ahrefNodes count] > 1) {
+                    url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                }
                 [position setValue:url forKey:@"mainURL"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
@@ -228,6 +230,7 @@
 }
 
 - (void)downloadDetailPositionWithURL:(NSString *)url andHandler:(void(^)(NSMutableDictionary *result))handler {
+    NSLog(@"%@", url);
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:url]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
