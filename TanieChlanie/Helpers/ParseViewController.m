@@ -176,6 +176,26 @@
     [operation start];
 }
 
+- (NSString *)getImageURLFromURL:(NSString *)url {
+    NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
+    NSArray *urlComponents = [url componentsSeparatedByString:@"&"];
+    
+    for (int i = 1; i < urlComponents.count; i++)
+    {
+        NSArray *pairComponents = [[urlComponents objectAtIndex:i] componentsSeparatedByString:@"="];
+        NSString *key = [pairComponents objectAtIndex:0];
+        NSString *value = [pairComponents objectAtIndex:1];
+        [queryStringDictionary setObject:value forKey:key];
+    }
+    
+    NSString *string = [NSString stringWithFormat:@"%@/covers/%@/%@.jpg",
+                        URL,
+                        [queryStringDictionary objectForKey:@"doc_library"],
+                        [queryStringDictionary objectForKey:@"doc_number"]];
+    NSLog(@"%@", string);
+    return string;
+}
+
 - (void)downloadResultWithTitle:(NSString *)title library:(NSString *)library cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28%@?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=%@&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", cookie, title, library]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
@@ -210,12 +230,13 @@
                 NSString *url = nil;
                 if([ahrefNodes count] > 1) {
                     url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                    [position setValue:[self getImageURLFromURL:url] forKey:@"imageURL"];
                 }
                 [position setValue:url forKey:@"mainURL"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
-
+                
                 if (![self.managedObjectContext save:&error]) {
                     NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                 }

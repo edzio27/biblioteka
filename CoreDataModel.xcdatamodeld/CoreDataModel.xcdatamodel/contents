@@ -8,6 +8,7 @@
     </entity>
     <entity name="Position" representedClassName="Position" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mainURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,8 +20,8 @@
         <attribute name="termin" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Position" positionX="-281" positionY="9" width="128" height="105"/>
-        <element name="PositionDetail" positionX="-279" positionY="171" width="128" height="105"/>
         <element name="Library" positionX="-639" positionY="117" width="128" height="105"/>
+        <element name="Position" positionX="-281" positionY="9" width="128" height="120"/>
+        <element name="PositionDetail" positionX="-279" positionY="171" width="128" height="105"/>
     </elements>
 </model>
