@@ -146,7 +146,7 @@ static int searchValue;
     cell.mapImageView.image = [UIImage imageNamed:@"no-image-blog-one"];
     
     dispatch_queue_t queue = dispatch_queue_create("download.position.image", NULL);
-    [[TMCache sharedCache] objectForKey:position.title
+    [[TMCache sharedCache] objectForKey:position.mainURL
                                   block:^(TMCache *cache, NSString *key, id object) {
                                       __block UIImage *image = (UIImage *)object;
                                       if(image) {
@@ -164,7 +164,7 @@ static int searchValue;
                                                   cell.mapImageView.image = image;
                                                   cell.mapImageView.contentMode = UIViewContentModeScaleAspectFill;
                                                   cell.mapImageView.clipsToBounds = TRUE;
-                                                  [[TMCache sharedCache] setObject:image forKey:position.title block:nil];
+                                                  [[TMCache sharedCache] setObject:image forKey:position.mainURL block:nil];
                                                   [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                                               });
                                           });

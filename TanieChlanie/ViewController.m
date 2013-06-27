@@ -26,13 +26,12 @@
 @property (nonatomic, strong) NSMutableDictionary *libraries;
 @property (nonatomic, strong) UIView *titleView;
 @property (nonatomic, strong) NSMutableArray *libraryArray;
-//@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 
 @implementation ViewController
 
-/*
 - (NSManagedObjectContext *)managedObjectContext {
     if(_managedObjectContext == nil) {
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -50,7 +49,6 @@
     }
     return _libraryArray;
 }
-*/
 
 - (UIView *)titleView {
     if(_titleView == nil) {
@@ -169,7 +167,7 @@
 }
 
 - (BOOL)librariesDownloaded {
-    if(self.libraries.count == 0) {
+    if(self.libraryArray.count == 0) {
         return NO;
     }
     return YES;
