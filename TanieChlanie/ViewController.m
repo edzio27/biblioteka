@@ -25,7 +25,6 @@
 @property (nonatomic, strong) IBOutlet UITextField *textField;
 @property (nonatomic, strong) NSMutableDictionary *libraries;
 @property (nonatomic, strong) UIView *titleView;
-@property (nonatomic, strong) NSMutableArray *libraryArray;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
@@ -40,16 +39,6 @@
     return _managedObjectContext;
 }
 
-- (NSMutableArray *)libraryArray {
-    if(_libraryArray == nil) {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        [fetchRequest setEntity:[NSEntityDescription entityForName:@"Library" inManagedObjectContext:self.managedObjectContext]];
-        NSError *error = nil;
-        _libraryArray = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    }
-    return _libraryArray;
-}
-
 - (UIView *)titleView {
     if(_titleView == nil) {
         _titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
@@ -62,13 +51,6 @@
         [_titleView addSubview:titleLabel];
     }
     return _titleView;
-}
-
-- (NSMutableDictionary *)libraries {
-    if(_libraries == nil) {
-        _libraries = [[NSMutableDictionary alloc] init];
-    }
-    return _libraries;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
@@ -167,7 +149,8 @@
 }
 
 - (BOOL)librariesDownloaded {
-    if(self.libraryArray.count == 0) {
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    if([userDefault objectForKey:@"librariesDictionary"] == nil) {
         return NO;
     }
     return YES;
@@ -219,6 +202,7 @@
 }
 
 - (void)showLibraries {
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
     if([self isThereInternetConnection]) {
         [self.progressHUD show:YES];
         NSString *title = @"piekara";
@@ -231,7 +215,7 @@
                 self.progressHUD = nil;
                 LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
                 libraries.delegate = self;
-                self.libraries = result;
+                [userDefault setObject:result forKey:@"librariesDictionary"];
                 libraries.libraryDictionary = result;
                 [self.navigationController pushViewController:libraries animated:YES];
             }];
@@ -241,7 +225,7 @@
             self.progressHUD = nil;
             LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
             libraries.delegate = self;
-            libraries.libraryDictionary = self.libraries;
+            libraries.libraryDictionary = [userDefault objectForKey:@"librariesDictionary"];
             [self.navigationController pushViewController:libraries animated:YES];
         }
     } else {
@@ -282,6 +266,7 @@
     UIImage *image = [[UIImage imageNamed:@"navigationbar"] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 1, 1, 1)];
     [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setTintColor:RED_COLOR];
+    self.scrollView.scrollEnabled = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -305,7 +290,7 @@
                                       - self.navigationController.navigationBar.frame.size.height
                                       - [UIApplication sharedApplication].statusBarFrame.size.height
                                       - keyboardFrameBeginRect.size.height);
-    self.scrollView.frame = rectTableView;
+    [self.scrollView setContentOffset:CGPointMake(rectTableView.origin.x, rectTableView.origin.y+100) animated:YES];
 }
 
 - (void)keyboardDidDisappear:(NSNotification *)notification {
