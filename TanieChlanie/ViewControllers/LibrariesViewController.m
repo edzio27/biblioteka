@@ -125,18 +125,18 @@
     
     [[TMCache sharedCache] objectForKey:library.name
                                   block:^(TMCache *cache, NSString *key, id object) {
-                                      __block UIImage *image = (UIImage *)object;
+                                      UIImage *image = (UIImage *)object;
                                       if(image) {
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               cell.mapImageView.image = image;
                                           });
                                       } else {
                                           dispatch_async(queue, ^{
-                                              image = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
+                                              UIImage *image = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   cell.mapImageView.image = image;
-                                                  [[TMCache sharedCache] setObject:image forKey:library.name block:nil];
                                                   [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  [[TMCache sharedCache] setObject:image forKey:library.name block:nil];
                                               });
                                           });
                                       }

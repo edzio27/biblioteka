@@ -41,12 +41,12 @@
 }
 
 - (NSMutableArray *)libraryArray {
-    if(_libraryArray == nil) {
+    //if(_libraryArray == nil) {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         [fetchRequest setEntity:[NSEntityDescription entityForName:@"Library" inManagedObjectContext:self.managedObjectContext]];
         NSError *error = nil;
         _libraryArray = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    }
+    //}
     return _libraryArray;
 }
 
@@ -67,6 +67,8 @@
 - (NSMutableDictionary *)libraries {
     if(_libraries == nil) {
         _libraries = [[NSMutableDictionary alloc] init];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        _libraries = [defaults objectForKey:@"libraries"];
     }
     return _libraries;
 }
@@ -183,6 +185,7 @@
         NSString *value = nil;
         if(array.count > 0) {
             value = [array objectAtIndex:0];
+            value = [[value componentsSeparatedByString:@"local_base="] objectAtIndex:1];
         } else {
             value = @"MBP";
         }
@@ -232,6 +235,10 @@
                 LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
                 libraries.delegate = self;
                 self.libraries = result;
+                
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setValue:result forKey:@"libraries"];
+                
                 libraries.libraryDictionary = result;
                 [self.navigationController pushViewController:libraries animated:YES];
             }];
@@ -299,14 +306,19 @@
     CGRect keyboardFrameBeginRect = [keyboardFrameBegin CGRectValue];
     
     CGRect rectTableView = CGRectMake(0,
-                                      0,
+                                      - 130,
                                       [[UIScreen mainScreen] bounds].size.width,
                                       [[UIScreen mainScreen] bounds].size.height
                                       - self.navigationController.navigationBar.frame.size.height
                                       - [UIApplication sharedApplication].statusBarFrame.size.height
-                                      - keyboardFrameBeginRect.size.height);
+                                      - keyboardFrameBeginRect.size.height + 130);
+    [UIView beginAnimations:@"button_in" context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     self.scrollView.frame = rectTableView;
-}
+    [UIView commitAnimations];}
 
 - (void)keyboardDidDisappear:(NSNotification *)notification {
     CGRect rectTableView = CGRectMake(0,
@@ -315,7 +327,13 @@
                                       [[UIScreen mainScreen] bounds].size.height
                                       - self.navigationController.navigationBar.frame.size.height
                                       - [UIApplication sharedApplication].statusBarFrame.size.height);
+    [UIView beginAnimations:@"button_in" context:nil];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationBeginsFromCurrentState:YES];
     self.scrollView.frame = rectTableView;
+    [UIView commitAnimations];
 }
 
 - (void)hideIndicator {

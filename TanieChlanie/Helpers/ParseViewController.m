@@ -102,7 +102,7 @@
 
 - (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
     self.finished = 0;
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/TTU9I31KUQGRP6DUALHQG3GF2V16375YUSII1BCF7XCNNSGFLN-24432?func=find-b&request=%@&find_code=WAU&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", title]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/751G1CMTU4MANFF8J5FU16LS3JLJHIEBVBQHU3K9E84FEMCJ4G-40591?func=file&file_name=base-list"]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -123,7 +123,7 @@
         HTMLNode *bodyNode = [parser body];
         NSArray *selectNode = [bodyNode findChildTags:@"select"];
             for(int j = 0; j < selectNode.count; j++) {
-            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"name"] isEqualToString:@"local_base"]) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"name"] isEqualToString:@"urljump"]) {
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"option"];
                 for (HTMLNode *spanNode in inputNodes) {
                     [diciotnary setObject:spanNode.contents forKey:[spanNode getAttributeNamed:@"value"]];
@@ -197,7 +197,7 @@
 }
 
 - (void)downloadResultWithTitle:(NSString *)title library:(NSString *)library cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28%@?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=%@&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", cookie, title, library]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28%@?func=find-b&request=%@&find_code=WRD&adjacent=N&local_base=%@&x=-10&y=-331&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&filter_code_4=WFT&filter_request_4=", cookie, title, library]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
