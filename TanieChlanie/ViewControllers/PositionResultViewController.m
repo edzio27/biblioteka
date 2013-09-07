@@ -171,7 +171,7 @@
         cell.authorLabel.text = [NSString stringWithFormat:@"Dostępne od: %@", position.termin];
     }
     cell.dateLabel.text = position.amount;
-    cell.mapImageView.image = [UIImage imageNamed:@"no-image-blog-one"];
+    cell.mapImageView.image = nil;
     if([self.libraryList count] > indexPath.row) {
         Library *library = [self.libraryList objectAtIndex:indexPath.row];
         dispatch_queue_t queue = dispatch_queue_create("download.map.view.library", NULL);

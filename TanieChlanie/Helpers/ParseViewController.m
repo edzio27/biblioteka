@@ -102,7 +102,7 @@
 
 - (void)downloadLibrariesWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
     self.finished = 0;
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?func=file&file_name=base-list", URL, cookie]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?func=find-acc&acc_sequence=000332130", URL, cookie]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -123,7 +123,7 @@
         HTMLNode *bodyNode = [parser body];
         NSArray *selectNode = [bodyNode findChildTags:@"select"];
             for(int j = 0; j < selectNode.count; j++) {
-            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"name"] isEqualToString:@"urljump"]) {
+            if([[[selectNode objectAtIndex:j] getAttributeNamed:@"name"] isEqualToString:@"local_base"]) {
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"option"];
                 for (HTMLNode *spanNode in inputNodes) {
                     [diciotnary setObject:spanNode.contents forKey:[spanNode getAttributeNamed:@"value"]];
@@ -331,6 +331,12 @@
                 NSManagedObject *position = [NSEntityDescription
                                              insertNewObjectForEntityForName:@"Position"
                                              inManagedObjectContext:self.managedObjectContext];
+                
+                if([ahrefNodes count] > 1) {
+                    NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                    [position setValue:[self getImageURLFromURL:url] forKey:@"imageURL"];
+                }
+                
                 NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
                 [position setValue:url forKey:@"mainURL"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];

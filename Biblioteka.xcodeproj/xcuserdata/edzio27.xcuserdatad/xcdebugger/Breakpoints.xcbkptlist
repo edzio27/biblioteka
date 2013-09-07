@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "TanieChlanie/Helpers/ParseViewController.m"
-         timestampString = "400108561.688924"
+         timestampString = "400244312.729744"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "407"
-         endingLineNumber = "407"
+         startingLineNumber = "413"
+         endingLineNumber = "413"
          landmarkName = "@implementation ParseViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -72,13 +72,26 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "TanieChlanie/ViewControllers/ResultSearchViewController.m"
-         timestampString = "400243521.000296"
+         filePath = "TanieChlanie/Helpers/ParseViewController.m"
+         timestampString = "400246568.037121"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "168"
-         endingLineNumber = "168"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "112"
+         endingLineNumber = "112"
+         landmarkName = "-downloadLibrariesWithTitle:cookie:andHandler:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "TanieChlanie/Helpers/ParseViewController.m"
+         timestampString = "400246594.818204"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "124"
+         endingLineNumber = "124"
+         landmarkName = "-downloadLibrariesWithTitle:cookie:andHandler:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

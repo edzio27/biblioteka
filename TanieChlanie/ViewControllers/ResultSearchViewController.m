@@ -123,9 +123,9 @@ static int searchValue;
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
-    //if(cell == nil) {
+    if(cell == nil) {
         cell = [[ProductCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    //}
+    }
     
     Position *position = [self.positionList objectAtIndex:indexPath.row];
     
@@ -166,7 +166,7 @@ static int searchValue;
                                                   cell.mapImageView.clipsToBounds = TRUE;
                                                   NSLog(@"image %@", image);
                                                   [[TMCache sharedCache] setObject:image forKey:position.mainURL block:nil];
-                                                  [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  //[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                                               });
                                           });
                                       }
