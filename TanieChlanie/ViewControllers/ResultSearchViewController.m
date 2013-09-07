@@ -164,6 +164,7 @@ static int searchValue;
                                                   cell.mapImageView.image = image;
                                                   cell.mapImageView.contentMode = UIViewContentModeScaleAspectFill;
                                                   cell.mapImageView.clipsToBounds = TRUE;
+                                                  NSLog(@"image %@", image);
                                                   [[TMCache sharedCache] setObject:image forKey:position.mainURL block:nil];
                                                   [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                                               });

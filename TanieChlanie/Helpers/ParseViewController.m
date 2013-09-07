@@ -100,9 +100,9 @@
 }
 
 
-- (void)downloadLibrariesWithTitle:(NSString *)title andHandler:(void(^)(NSMutableDictionary *result))handler {
+- (void)downloadLibrariesWithTitle:(NSString *)title cookie:(NSString *)cookie andHandler:(void(^)(NSMutableDictionary *result))handler {
     self.finished = 0;
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://80.53.118.28/F/751G1CMTU4MANFF8J5FU16LS3JLJHIEBVBQHU3K9E84FEMCJ4G-40591?func=file&file_name=base-list"]]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?func=file&file_name=base-list", URL, cookie]]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];

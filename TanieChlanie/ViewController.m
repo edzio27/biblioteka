@@ -190,9 +190,9 @@
             value = @"MBP";
         }
         if(![self librariesDownloaded]) {
-            [parse downloadLibrariesWithTitle:title andHandler:^(NSMutableDictionary *result) {
-                [parse findSearchPathWithCookie:^(NSString *result) {
-                    [parse downloadResultWithTitle:title library:value cookie:result andHandler:^(NSMutableDictionary *result) {
+            [parse findSearchPathWithCookie:^(NSString *cookie) {
+                [parse downloadLibrariesWithTitle:title cookie:cookie andHandler:^(NSMutableDictionary *result) {
+                    [parse downloadResultWithTitle:title library:value cookie:cookie andHandler:^(NSMutableDictionary *result) {
                         [self.progressHUD hide:YES];
                         [self.progressHUD removeFromSuperview];
                         self.progressHUD = nil;
@@ -228,19 +228,21 @@
         ParseViewController *parse = [[ParseViewController alloc] init];
         parse.delegate = self;
         if(![self librariesDownloaded]) {
-            [parse downloadLibrariesWithTitle:title andHandler:^(NSMutableDictionary *result) {
-                [self.progressHUD hide:YES];
-                [self.progressHUD removeFromSuperview];
-                self.progressHUD = nil;
-                LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
-                libraries.delegate = self;
-                self.libraries = result;
-                
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults setValue:result forKey:@"libraries"];
-                
-                libraries.libraryDictionary = result;
-                [self.navigationController pushViewController:libraries animated:YES];
+            [parse findSearchPathWithCookie:^(NSString *cookie) {
+                [parse downloadLibrariesWithTitle:title cookie:cookie andHandler:^(NSMutableDictionary *result) {
+                    [self.progressHUD hide:YES];
+                    [self.progressHUD removeFromSuperview];
+                    self.progressHUD = nil;
+                    LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
+                    libraries.delegate = self;
+                    self.libraries = result;
+                    
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setValue:result forKey:@"libraries"];
+                    
+                    libraries.libraryDictionary = result;
+                    [self.navigationController pushViewController:libraries animated:YES];
+                }];
             }];
         } else {
             [self.progressHUD hide:YES];
@@ -265,6 +267,7 @@
     [self.textField.layer setCornerRadius:0.0f];
     self.textField.layer.masksToBounds = YES;
     [self.textField setBackgroundColor:GRAY_COLOR];
+    self.textField.placeholder = @"Wpisz szukane słowo";
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidAppear:)

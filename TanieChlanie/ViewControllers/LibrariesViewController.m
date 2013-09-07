@@ -135,8 +135,8 @@
                                               UIImage *image = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
                                               dispatch_async(dispatch_get_main_queue(), ^{
                                                   cell.mapImageView.image = image;
-                                                  [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                                                   [[TMCache sharedCache] setObject:image forKey:library.name block:nil];
+                                                                             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
                                               });
                                           });
                                       }
