@@ -37,7 +37,6 @@
 }
 
 - (void)hideIndicator {
-    NSLog(@"hide");
 }
 
 - (NSOperationQueue *)queue {
@@ -66,7 +65,6 @@
         
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
-        NSLog(@"res %@", responseString);
         NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
         if (error) {
@@ -81,14 +79,12 @@
             if([[[selectNode objectAtIndex:j] getAttributeNamed:@"class"] isEqualToString:@"middlebar"]) {
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
                 if(inputNodes.count > 1) {
-                    NSLog(@"%@", [[inputNodes objectAtIndex:1] getAttributeNamed:@"href"]);
                     string = [[inputNodes objectAtIndex:1] getAttributeNamed:@"href"];
                     NSArray *array = [string componentsSeparatedByString:@"?"];
                     string = [array objectAtIndex:0];
                 }
             }
         }
-        NSLog(@"strin %@", string);
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.cookieString = string;
         handler(string);
@@ -128,7 +124,6 @@
                 for (HTMLNode *spanNode in inputNodes) {
                     [diciotnary setObject:spanNode.contents forKey:[spanNode getAttributeNamed:@"value"]];
                     /* get json with coordinates */
-                    NSLog(@"%@", spanNode.contents);
                     NSArray *arrayAddress = [spanNode.contents componentsSeparatedByString:@". "];
                     if(arrayAddress.count > 1) {
                         //NSString *parsedString = [[arrayAddress objectAtIndex:1] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -137,11 +132,9 @@
                         /* check if string contain (ALEPH) sting */
                         if ([parsedString rangeOfString:@"(ALEPH)"].location == NSNotFound) {
                             parsedString = [NSString stringWithFormat:@"%@ Wrocław", parsedString];
-                            NSLog(@"string %@", parsedString);
                         } else {
                             parsedString = [parsedString stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
                             parsedString = [NSString stringWithFormat:@"%@ Wrocław", parsedString];
-                            NSLog(@"string %@", parsedString);
                         }
                         
                         /* save to core data base */
@@ -195,7 +188,6 @@
                         URL,
                         [queryStringDictionary objectForKey:@"doc_library"],
                         [queryStringDictionary objectForKey:@"doc_number"]];
-    NSLog(@"%@", string);
     return string;
 }
 
@@ -253,7 +245,6 @@
 }
 
 - (void)downloadDetailPositionWithURL:(NSString *)url andHandler:(void(^)(NSMutableDictionary *result))handler {
-    NSLog(@"%@", url);
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:url]];
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
@@ -323,7 +314,6 @@
         NSArray *selectNode = [bodyNode findChildTags:@"tr"];
         for(int j = 0; j < selectNode.count; j++) {
             if([[[selectNode objectAtIndex:j] getAttributeNamed:@"valign"] isEqualToString:@"baseline"]) {
-                NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
                 NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
                 
@@ -368,53 +358,9 @@
                                            forKeys:
                                             @[@"latitude",
                                                 @"longitude"]];
-        NSLog(@"");
         handler(dictionary);
     }];
 }
-
-/*
-- (void)downloadLocationWithString:(NSString *)locationName andHandler:(void(^)(NSMutableDictionary *result))handler {
-    sleep(1);
-    NSString *stringName = [locationName stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSMutableDictionary *parametersDictionary = [[NSMutableDictionary alloc] initWithObjects:@[stringName,
-                                                                                             @"true"]
-                                                                                    forKeys:@[@"address",
-                                                                                             @"sensor"]];
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:
-                                                                      [NSString stringWithFormat:
-                                                                       @"http://maps.googleapis.com/maps/api/geocode"]]];
-    NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
-                                                            path:@"json"
-                                                      parameters:parametersDictionary];
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError* error;
-        NSDictionary* json = [NSJSONSerialization
-                              JSONObjectWithData:responseObject
-                              options:kNilOptions 
-                              error:&error];
-        NSLog(@"%@", json);
-        NSNumber *latitude = [[[[[json objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lat"];
-        NSNumber *longitude = [[[[[json objectForKey:@"results"] objectAtIndex:0] objectForKey:@"geometry"] objectForKey:@"location"] objectForKey:@"lng"];
-        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc]
-                                           initWithObjects:
-                                           @[latitude,
-                                           longitude]
-                                           forKeys:
-                                           @[@"latitude",
-                                           @"longitude"]];
-        NSLog(@"%@", dictionary);
-        handler(dictionary);
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-    [operation start];
-}
-*/
 
 - (void)cancelAllOperations {
     [self.queue cancelAllOperations];

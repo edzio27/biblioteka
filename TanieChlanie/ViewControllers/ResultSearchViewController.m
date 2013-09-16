@@ -144,7 +144,6 @@ static int searchValue;
         cell.backgroundView.backgroundColor = GRAY_COLOR;
     }
     cell.mapImageView.image = [UIImage imageNamed:@"no-image-blog-one"];
-    NSLog(@"image path %@", position.imageURL);
     dispatch_queue_t queue = dispatch_queue_create("download.position.image", NULL);
     [[TMCache sharedCache] objectForKey:position.mainURL
                                   block:^(TMCache *cache, NSString *key, id object) {

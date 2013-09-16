@@ -74,12 +74,10 @@
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    NSLog(@"textFieldShouldEndEditing");
     textField.backgroundColor = [UIColor whiteColor];
     return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    NSLog(@"textFieldDidEndEditing");
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -146,10 +144,10 @@
                                                                  [[UIScreen mainScreen] bounds].size.height - 70,
                                                                  self.view.frame.size.width,
                                                                  50)];
-        _authorLabel.backgroundColor = [UIColor clearColor];
+        _authorLabel.backgroundColor = [UIColor whiteColor];
         _authorLabel.numberOfLines = 2;
-        _authorLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:10];
-        _authorLabel.textColor = [UIColor colorWithRed:0.608 green:0.518 blue:0.953 alpha:1.0];
+        _authorLabel.font = [UIFont fontWithName:@"ArialRoundedMTBold" size:11];
+        _authorLabel.textColor = [UIColor blackColor];
         _authorLabel.textAlignment = NSTextAlignmentCenter;
         _authorLabel.userInteractionEnabled = YES;
         
@@ -317,7 +315,8 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView setAnimationBeginsFromCurrentState:YES];
     self.scrollView.frame = rectTableView;
-    [UIView commitAnimations];}
+    [UIView commitAnimations];
+}
 
 - (void)keyboardDidDisappear:(NSNotification *)notification {
     CGRect rectTableView = CGRectMake(0,

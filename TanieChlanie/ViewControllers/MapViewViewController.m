@@ -90,17 +90,6 @@
     [self.mapView setRegion:region animated:YES];
 }
 
-/*
-- (void)showSelectedPin {
-    if(self.selectedPinNumber) {
-        int selectedPin = [self.selectedPinNumber intValue];
-        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self mapView:self.mapView viewForAnnotation:[self.pinsArray objectAtIndex:selectedPin]];
-        NSLog(@"%@", annotationView);
-        [annotationView setSelected:YES animated:YES];
-    }
-}
-*/
- 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

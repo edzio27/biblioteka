@@ -117,8 +117,6 @@
     
     cell.rowNumber.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     cell.titleLabel.frame = CGRectMake(30, 0, 200, 63);
-    NSLog(@"%@", self.libraryDictionary);
-    NSLog(@"row %@", [self.titleArray objectAtIndex:indexPath.row]);
     cell.titleLabel.text = [[self.titleArray objectAtIndex:indexPath.row] stringByReplacingOccurrencesOfString:@"(ALEPH)" withString:@""];
     cell.circleView.backgroundColor = RED_COLOR;
     
@@ -136,9 +134,11 @@
                                           dispatch_async(queue, ^{
                                               UIImage *image = [UIImage getImageMapWithLatitude:[library.latitude floatValue] andLongitude:[library.longitude floatValue]];
                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                  cell.mapImageView.image = image;
-                                                  [[TMCache sharedCache] setObject:image forKey:library.name block:nil];
-                                                                             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  if(image != nil) {
+                                                      cell.mapImageView.image = image;
+                                                      [[TMCache sharedCache] setObject:image forKey:library.name block:nil];
+                                                      [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  }
                                               });
                                           });
                                       }
