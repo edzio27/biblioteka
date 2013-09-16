@@ -41,12 +41,12 @@
 }
 
 - (NSMutableArray *)libraryArray {
-    //if(_libraryArray == nil) {
+    if(_libraryArray == nil) {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         [fetchRequest setEntity:[NSEntityDescription entityForName:@"Library" inManagedObjectContext:self.managedObjectContext]];
         NSError *error = nil;
         _libraryArray = [[self.managedObjectContext executeFetchRequest:fetchRequest error:&error] mutableCopy];
-    //}
+    }
     return _libraryArray;
 }
 
@@ -169,7 +169,7 @@
 }
 
 - (BOOL)librariesDownloaded {
-    if(self.libraryArray.count == 0) {
+    if(self.libraries.count == 0) {
         return NO;
     }
     return YES;
@@ -185,7 +185,7 @@
         NSString *value = nil;
         if(array.count > 0) {
             value = [array objectAtIndex:0];
-            value = [[value componentsSeparatedByString:@"local_base="] objectAtIndex:1];
+            //value = [[value componentsSeparatedByString:@"local_base="] objectAtIndex:1];
         } else {
             value = @"MBP";
         }
@@ -233,14 +233,10 @@
                     [self.progressHUD hide:YES];
                     [self.progressHUD removeFromSuperview];
                     self.progressHUD = nil;
+                    self.libraries = result;
                     LibrariesViewController *libraries = [[LibrariesViewController alloc] init];
                     libraries.delegate = self;
-                    self.libraries = result;
-                    
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setValue:result forKey:@"libraries"];
-                    
-                    libraries.libraryDictionary = result;
+                    libraries.libraryDictionary = self.libraries;
                     [self.navigationController pushViewController:libraries animated:YES];
                 }];
             }];
@@ -268,7 +264,6 @@
     self.textField.layer.masksToBounds = YES;
     [self.textField setBackgroundColor:GRAY_COLOR];
     self.textField.placeholder = @"Wpisz szukane słowo";
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidAppear:)
                                                  name:UIKeyboardWillShowNotification
@@ -277,6 +272,7 @@
                                              selector:@selector(keyboardDidDisappear:)
                                                  name:UIKeyboardWillHideNotification
                                                object:self.view.window];
+    [self.textField resignFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

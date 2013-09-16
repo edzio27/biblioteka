@@ -144,7 +144,7 @@ static int searchValue;
         cell.backgroundView.backgroundColor = GRAY_COLOR;
     }
     cell.mapImageView.image = [UIImage imageNamed:@"no-image-blog-one"];
-    
+    NSLog(@"image path %@", position.imageURL);
     dispatch_queue_t queue = dispatch_queue_create("download.position.image", NULL);
     [[TMCache sharedCache] objectForKey:position.mainURL
                                   block:^(TMCache *cache, NSString *key, id object) {
@@ -161,17 +161,17 @@ static int searchValue;
                                                                   [NSData dataWithContentsOfURL:
                                                                    [NSURL URLWithString:position.imageURL]]];
                                               dispatch_async(dispatch_get_main_queue(), ^{
-                                                  cell.mapImageView.image = image;
-                                                  cell.mapImageView.contentMode = UIViewContentModeScaleAspectFill;
-                                                  cell.mapImageView.clipsToBounds = TRUE;
-                                                  NSLog(@"image %@", image);
-                                                  [[TMCache sharedCache] setObject:image forKey:position.mainURL block:nil];
-                                                  //[self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  if(image != nil) {
+                                                      cell.mapImageView.image = image;
+                                                      cell.mapImageView.contentMode = UIViewContentModeScaleAspectFill;
+                                                      cell.mapImageView.clipsToBounds = TRUE;
+                                                      [[TMCache sharedCache] setObject:image forKey:position.mainURL block:nil];
+                                                      [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                                                  }
                                               });
                                           });
                                       }
                                   }];
-    
     
     return cell;
 }

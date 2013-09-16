@@ -163,6 +163,9 @@
                             }
                          self.finished--;
                          if(self.finished == 0) {
+                             
+                             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                             [defaults setValue:diciotnary forKey:@"libraries"];
                              handler(diciotnary);
                          }
                         }];
@@ -207,7 +210,6 @@
         
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
-        NSLog(@"res %@", responseString);
         NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
         if (error) {
@@ -301,7 +303,6 @@
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:
                                                                       [NSString stringWithFormat:
                                                                        @"http://80.53.118.28%@?func=short-jump&request=%@&find_code=WRD&adjacent=N&local_base=MBP&x=0&y=0&filter_code_1=WLN&filter_request_1=&filter_code_2=WYR&filter_request_2=&filter_code_3=WYR&filter_request_3=&jump=%@&filter_code_4=WFT&filter_request_4=", appDelegate.cookieString, title, partNumber]]];
-    NSLog(@"%@", [NSString stringWithFormat:@"%@%@?func=short-jump&jump=0000%@", URL, appDelegate.cookieString, partNumber]);
     NSMutableURLRequest *request = [httpClient requestWithMethod:@"GET"
                                                             path:nil
                                                       parameters:nil];
@@ -311,7 +312,6 @@
         
         NSString* responseString = [[NSString alloc] initWithData:responseObject
                                                          encoding:NSUTF8StringEncoding];
-        NSLog(@"res %@", responseString);
         NSError *error = nil;
         HTMLParser *parser = [[HTMLParser alloc] initWithString:responseString error:&error];
         if (error) {
@@ -326,7 +326,6 @@
                 NSLog(@"%@", [[selectNode objectAtIndex:j] getAttributeNamed:@"valign"]);
                 NSArray *inputNodes = [[selectNode objectAtIndex:j]  findChildTags:@"td"];
                 NSArray *ahrefNodes = [[selectNode objectAtIndex:j]  findChildTags:@"a"];
-                NSLog(@"%@", [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]);
                 
                 NSManagedObject *position = [NSEntityDescription
                                              insertNewObjectForEntityForName:@"Position"
@@ -335,10 +334,11 @@
                 if([ahrefNodes count] > 1) {
                     NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
                     [position setValue:[self getImageURLFromURL:url] forKey:@"imageURL"];
+                    
+                    NSString *mainUrl = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
+                    [position setValue:mainUrl forKey:@"mainURL"];
                 }
                 
-                NSString *url = [NSString stringWithFormat:@"%@%@", URL, [((HTMLNode *)[ahrefNodes objectAtIndex:1]) getAttributeNamed:@"href"]];
-                [position setValue:url forKey:@"mainURL"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:2]).contents forKey:@"author"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:3]).contents forKey:@"title"];
                 [position setValue:((HTMLNode *)[inputNodes objectAtIndex:4]).contents forKey:@"year"];
