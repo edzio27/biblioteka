@@ -68,6 +68,8 @@
 		DB4FBD9F176CCA6C0026BE29 /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4FBD9E176CCA6C0026BE29 /* Library.m */; };
 		DB4FBDA1176E6F230026BE29 /* mapIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB4FBDA0176E6F230026BE29 /* mapIcon@2x.png */; };
 		DB4FBDA5176F67140026BE29 /* UIImage+MapShot.m in Sources */ = {isa = PBXBuildFile; fileRef = DB4FBDA4176F67140026BE29 /* UIImage+MapShot.m */; };
+		DB6A7D1117E799320086297F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB6A7D0F17E799320086297F /* icon.png */; };
+		DB6A7D1217E799320086297F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB6A7D1017E799320086297F /* icon@2x.png */; };
 		DB6E4952177B812600DEBF85 /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = DB6E4951177B812600DEBF85 /* Position.m */; };
 		DB9F52FC175D244100FC323E /* PositionResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB9F52FA175D244100FC323E /* PositionResultViewController.m */; };
 		DB9F52FD175D244100FC323E /* PositionResultViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB9F52FB175D244100FC323E /* PositionResultViewController.xib */; };
@@ -168,6 +170,8 @@
 		DB4FBDA0176E6F230026BE29 /* mapIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mapIcon@2x.png"; sourceTree = "<group>"; };
 		DB4FBDA3176F67140026BE29 /* UIImage+MapShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MapShot.h"; sourceTree = "<group>"; };
 		DB4FBDA4176F67140026BE29 /* UIImage+MapShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MapShot.m"; sourceTree = "<group>"; };
+		DB6A7D0F17E799320086297F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		DB6A7D1017E799320086297F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		DB6E4950177B812600DEBF85 /* Position.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
 		DB6E4951177B812600DEBF85 /* Position.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
 		DB9F52F9175D244100FC323E /* PositionResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionResultViewController.h; sourceTree = "<group>"; };
@@ -201,6 +205,8 @@
 		DB0258CD1753DBDC006F604E = {
 			isa = PBXGroup;
 			children = (
+				DB6A7D0F17E799320086297F /* icon.png */,
+				DB6A7D1017E799320086297F /* icon@2x.png */,
 				DB17F0FC1766729600F35AB7 /* MapKit.framework */,
 				DB17F0F11766671C00F35AB7 /* CoreLocation.framework */,
 				DB19B9A4175BDC4900801744 /* libxml2.dylib */,
@@ -537,6 +543,8 @@
 				DB17F0E91760E8E400F35AB7 /* navigationbar@2x.png in Resources */,
 				DB17F0F717666B9200F35AB7 /* MapViewViewController.xib in Resources */,
 				DB4FBDA1176E6F230026BE29 /* mapIcon@2x.png in Resources */,
+				DB6A7D1117E799320086297F /* icon.png in Resources */,
+				DB6A7D1217E799320086297F /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
